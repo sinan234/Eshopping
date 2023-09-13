@@ -1,4 +1,5 @@
 import { Component,ElementRef,ViewChild } from '@angular/core';
+import { SearchService } from './service/search.service';
 
 @Component({
   selector: 'app-root',
@@ -6,13 +7,16 @@ import { Component,ElementRef,ViewChild } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private searchService: SearchService) {}
+
   title = 'test';
 
   searchtext:string='';
   
   onsearchtextchange(data:string){
       this.searchtext=data;
-      console.log(this.searchtext)
+      this.searchService.setSearchValue(this.searchtext);
+     
   }
 
   @ViewChild('dob') dateofbirth?: ElementRef;

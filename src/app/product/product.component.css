@@ -1,23 +1,35 @@
 #cardc{
     position: relative;
-    margin-top: 40px;
+    margin-top: 1px;
+    padding: 1px;
+    height: 50px;
+    /* margin-left: 30px; */
+   
 }
+#cardp{
+width: 350px;
+height: 105px;
+padding: 35px ;
+margin-left: 30px;
+margin-top: 10px;
+
+}
+
 #btn{
     height: 40px;
     width: 76px;
-    margin-left: 1px;
+    margin-right: 25px;
+    margin-left: 20px;
     margin-top: 20px;
     color: aliceblue;
 }
 #img{
-    width: 250px;
-    height: 260px;
+    /* width: 200px;
+    height: 210px; */
 }
 .highlight{
     background-color: aquamarine;
     border: #ff5722 1px solid ;
     border-radius: 4px;
 }
-body{
-    margin-left: 5px;
-}
+

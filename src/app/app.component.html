@@ -1,11 +1,14 @@
 <div>
   <app-header (Searchtextchanged)="onsearchtextchange($event)"></app-header>
-  
-  <router-outlet></router-outlet>
+  <div class="d-flex justify-content-center" >
+    <router-outlet ></router-outlet>
+    <!-- <app-body [search]="searchtext" ></app-body> -->
+
+  </div>
   <!-- <div>
     <label> DOB: </label>
     <input type="date" (blur)="calculateage()" #dob/>
     <label> Age: </label>
     <input type="number" #age/>
   </div> -->
-</div>
+</div> 

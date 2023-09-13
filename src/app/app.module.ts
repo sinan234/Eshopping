@@ -15,12 +15,14 @@ import { IfcaseDirective } from './customdirective/ifcase.directive';
 import { Sample1Component } from './sample1/sample1.component';
 import { Sample2Component } from './sample2/sample2.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ContactComponent } from './contact/contact.component';
 
 const appRoute:Routes=[
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path:'home', component: BodyComponent},
   {path:'About', component: Sample1Component},
-  {path:'Products', component: ProductComponent},
-  {path:'Contact', component: ProductComponent}
+  {path:'products', component: ProductComponent},
+  {path:'contact', component: ContactComponent}
 ]
 
 @NgModule({
@@ -38,6 +40,7 @@ const appRoute:Routes=[
          IfcaseDirective,
          Sample1Component,
          Sample2Component,
+         ContactComponent,
    
   ],
   imports: [
