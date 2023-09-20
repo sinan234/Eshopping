@@ -17,6 +17,9 @@ import { Sample2Component } from './sample2/sample2.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
+import { SignupComponent } from './signup/signup.component';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -38,12 +41,16 @@ import { ProductdetailsComponent } from './productdetails/productdetails.compone
          ContactComponent,
          AboutComponent,
          ProductdetailsComponent,
+         SignupComponent,
+         LoginComponent
+         
    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

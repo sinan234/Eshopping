@@ -6,6 +6,9 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
 import { Productguard } from './service/productguard.service';
+import { SignupComponent } from './signup/signup.component';
+import { LoggedinService } from './service/loggedin.service';
+import { LoginComponent } from './login/login.component';
 
 const appRoute:Routes=[
   // { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,7 +17,9 @@ const appRoute:Routes=[
   {path:'about', component: AboutComponent},
   {path:'products', component: ProductComponent},
   {path:'products/:id', component: ProductdetailsComponent, canActivate:[Productguard]},
-  {path:'contact', component: ContactComponent}
+  {path:'contact', component: ContactComponent},
+  {path:'signup', component: SignupComponent},
+  {path:'login', component: LoginComponent}
 ]
 
 @NgModule({

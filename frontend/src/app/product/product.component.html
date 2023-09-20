@@ -1,5 +1,6 @@
+<app-header></app-header>
 <div >
-  <button id="btn" type="button" class="btn btn-info me-auto" routerLink="/home">Back</button>
+  <button id="btn" type="button" class="btn  me-auto" routerLink="/home">Back</button>
   <div>
     <app-filter (Buttonchanged)="radiochanged($event)"  [avail]="getavail()" [call]="getallitems()" [notavail]="getnot()"></app-filter>
 

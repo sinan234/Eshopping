@@ -1,14 +1,8 @@
-<div>
-  <app-header  *ngIf="showheader" (Searchtextchanged)="onsearchtextchange($event)"></app-header>
-  <div class="d-flex justify-content-center" >
+<!-- <div>
+  <app-header  *ngIf="showheader " (Searchtextchanged)="onsearchtextchange($event)"></app-header> -->
+  <div >
     <router-outlet  ></router-outlet>
     <!-- <app-body [search]="searchtext" ></app-body> -->
 
   </div>
-  <!-- <div>
-    <label> DOB: </label>
-    <input type="date" (blur)="calculateage()" #dob/>
-    <label> Age: </label>
-    <input type="number" #age/>
-  </div> -->
-</div> 
+<!-- </div>  -->

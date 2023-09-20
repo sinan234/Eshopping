@@ -22,13 +22,18 @@ export class AppComponent implements DoCheck,OnInit {
 
   showheader:boolean=true
 
+
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof ActivationEnd && event.snapshot.url[0].path === 'contact') {
         this.showheader=false;
       }
       
+      
     });
+
+   
+     
   }
 
   ngDoCheck(){
@@ -36,7 +41,7 @@ export class AppComponent implements DoCheck,OnInit {
       if (event instanceof ActivationEnd && event.snapshot.url[0].path != 'contact') {
         this.showheader=true;
       }
-      
+       
     });
   }
 

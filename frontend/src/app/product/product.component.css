@@ -21,7 +21,13 @@ margin-top: 10px;
     margin-right: 25px;
     margin-left: 20px;
     margin-top: 20px;
-    color: aliceblue;
+    background-color:cadetblue;
+    color: white;
+
+}
+#btn:hover{
+    background-color: darkcyan;
+    color: white;
 }
 #img{
     /* width: 200px;

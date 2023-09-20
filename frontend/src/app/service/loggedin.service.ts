@@ -16,6 +16,7 @@ export class LoggedinService {
   }
 
   IsAuth(){
+    
     return this.loggedin;
   }
 }

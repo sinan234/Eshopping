@@ -1,6 +1,7 @@
 import { Component,EventEmitter,Output } from '@angular/core';
 import { LoggedinService } from '../service/loggedin.service';
 import { ApiService } from '../service/api.service';
+import { SearchService } from '../service/search.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import { ApiService } from '../service/api.service';
 })
 export class HeaderComponent {
   
-  constructor(private auth:LoggedinService){}
+  constructor(private auth:LoggedinService, private search: SearchService){}
    searchValue:string='';
 
   //  changeSearchValue(eventData:Event){
@@ -21,6 +22,7 @@ export class HeaderComponent {
 
    onSearchtextchanged(){
     this.Searchtextchanged.emit(this.searchValue);
+    this.search.setSearchValue(this.searchValue);
    
    }
    login(){

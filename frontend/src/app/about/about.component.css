@@ -33,7 +33,19 @@ body {
   .container {
     padding: 0 16px;
   }
-  
+  .btn{
+    margin-left: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color:cadetblue;
+    width: 76px;
+
+  }
+  .btn:hover{
+    color:white;
+    background-color: darkcyan;
+  }
+
   .container::after, .row::after {
     content: "";
     clear: both;
