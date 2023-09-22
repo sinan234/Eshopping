@@ -1,0 +1,41 @@
+
+<div class="cart-wrap ">
+    <button id="btn" type="button" class="btn "  [appButtonstyle]="true" routerLink="/home">Back</button>
+
+    <div class="container">
+        <div class="row">
+            <div id="div" class="col-md-12 ms-5">
+                <h2 class="main-heading mt-10 ">My wishlist</h2>
+                <div class="table-wishlist">
+                    <table  cellpadding="6" cellspacing="2" width="100%">
+                        <thead>
+                            <tr id="tr" class="p-3  justify-content-center ">
+                                <th width="45%" ><h5>Product Name </h5></th>
+                                <th width="15%"><h5>Price</h5></th>
+                                <th width="15%"><h5>Stock Status</h5></th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of wishlist">
+                            <tr class="a">
+                                <td  width="45%">
+                                    <div id="img" class="display-flex align-center p-4">
+                                            <img src="{{item.Thumbnail}}"  class="img">
+                                            <h5 class="h5a">{{item.Name}}</h5>
+                                        
+                                    </div>
+                                </td>
+                                <td width="15%" class="price">{{item.Price}}</td>
+                                <td width="15%"><span class="in-stock-box">In Stock</span></td>
+                                <td width="15%"><button class="round-black-btn small-btn">Add to Cart</button></td>
+                                <td width="10%" class="text-center"><a href="#" class="trash-icon"><i class="far fa-trash-alt"></i></a></td>
+                            </tr>
+                            
+                          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

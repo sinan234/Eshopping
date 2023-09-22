@@ -1,19 +1,13 @@
-.gradient-custom {
-    /* fallback for old browsers */
-    
-    /* Chrome 10-25, Safari 5.1-6 */
-    
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-    .btn{
+
+    #btn{
         margin-left: 15px;
         margin-top: 10px;
         margin-bottom: 5px;
         background-color:cadetblue;
         width: 76px;
-    
+        border-radius: 4px;
       }
-      .btn:hover{
+      #btn:hover{
         color:white;
         background-color: darkcyan;
       }

@@ -33,6 +33,12 @@ export class SignupComponent  {
       console.log('Form submitted');
   
       this.msg = 'User created successfully';
+
+      if(this.name.length==0 || this.email.length==0 || this.password.length==0 ){
+        this.msg='All fields are required';
+        this.display=true;
+        return;
+      }
   
       if (this.password !== this.npassword) {
         this.msg='Password and confirm password should be the same';

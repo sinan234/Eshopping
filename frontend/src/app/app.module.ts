@@ -20,6 +20,8 @@ import { ProductdetailsComponent } from './productdetails/productdetails.compone
 import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { ButtonstyleDirective } from './customdirective/buttonstyle.directive';
 
 
 
@@ -42,7 +44,9 @@ import { LoginComponent } from './login/login.component';
          AboutComponent,
          ProductdetailsComponent,
          SignupComponent,
-         LoginComponent
+         LoginComponent,
+         WishlistComponent,
+         ButtonstyleDirective
          
    
   ],

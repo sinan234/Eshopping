@@ -19,25 +19,38 @@ export class LoginComponent {
   this.logindisplay=false;
  }
 
-  onsubmit(form:NgForm){
-    console.log("onsubmit method called");
-    console.log(form.value);  
-    console.log(this.email);
-    const user={email:this.email, password:this.password};
-    this.logindisplay=true;
-    this.http.post('http://localhost:3000/login', user)
-  .subscribe(
-    (response: any) => {
-      console.log("login successful");
-      console.log(response);
-      this.msg="Login Successful";
-    },
-    (error: any) => {
-      console.log("login failed");
-      console.log(error);
-      this.msg="Login Failed";
 
-    }
-  );
+ onsubmit(form: NgForm) {
+  if (this.email.length === 0 || this.password.length === 0) {
+    this.msg = 'All fields are required';
+    this.logindisplay = true;
+    return;
   }
+
+  console.log("onsubmit method called");
+  console.log(form.value);
+
+  const user = { email: this.email, password: this.password };
+  this.logindisplay = true;
+
+  this.http.post('http://localhost:3000/login', user)
+    .subscribe(
+      (response: any) => {
+        console.log(response);
+        this.msg = response.message;
+        form.reset();
+        console.log(this.msg);
+      },
+      (error: any) => {
+        console.log("login failed");
+        console.log(error);
+        if (error.error && error.error.message) {
+          this.msg = error.error.message;
+        } else {
+          this.msg = 'Unknown error occurred';
+        }
+      }
+    );
+}
+
 }

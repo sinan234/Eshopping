@@ -9,6 +9,7 @@ import { Productguard } from './service/productguard.service';
 import { SignupComponent } from './signup/signup.component';
 import { LoggedinService } from './service/loggedin.service';
 import { LoginComponent } from './login/login.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 const appRoute:Routes=[
   // { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,10 +17,12 @@ const appRoute:Routes=[
 ,  {path:'home', component: BodyComponent},
   {path:'about', component: AboutComponent},
   {path:'products', component: ProductComponent},
-  {path:'products/:id', component: ProductdetailsComponent, canActivate:[Productguard]},
+  // {path:'products/:id', component: ProductdetailsComponent, canActivate:[Productguard]},
+  {path:'products/:id', component: ProductdetailsComponent},
   {path:'contact', component: ContactComponent},
   {path:'signup', component: SignupComponent},
-  {path:'login', component: LoginComponent}
+  {path:'login', component: LoginComponent},
+  {path:'wishlist', component:WishlistComponent }
 ]
 
 @NgModule({
