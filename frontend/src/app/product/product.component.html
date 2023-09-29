@@ -16,8 +16,8 @@
       <div id="cardp" class="card " style="width: 20rem; height: 30rem;" *ngIf="itemcountradio==='All' || itemcountradio===item.availbale" >
         <img id="img" [src]="item.Thumbnail" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{item.Name}}</h5>
-          <h5 class="card-title">Rs {{item.Price}}</h5>
+          <h5 id="a" class="card-title">{{item.Name}}</h5>
+          <h5 id="a" class="card-title">Rs {{item.Price}}</h5>
           <p class="card-text" [ngStyle]="{color: item.availbale==='Available'? 'Green' : 'Red'}">{{item.availbale}}</p>
           <div class="d-flex ">
             <a routerLink="{{item.Product_ID }}" class="btn btn-primary me-auto">Buy Now</a>

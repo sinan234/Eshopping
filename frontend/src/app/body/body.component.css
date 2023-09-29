@@ -1,27 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Heebo:wght@500&family=Pattaya&display=swap');.custom-margin {
-    margin-left: 5rem;
-  }
-  
-  #d{
-    font-family: 'Heebo', sans-serif;
-    font-size: 58px;
-    margin-top: 28px;
+  margin-left: 5rem;
+}
+
+#d{
+  font-family: 'Heebo', sans-serif;
+  font-size: 50px;
+  position: relative;
+  margin-top: 1rem;
 }
 #img{
-    width:50%;
-    mix-blend-mode: multiply
+  width:50%;
+  mix-blend-mode: multiply
 }
 .text{
-  margin-top: 150px;
-  margin-left: 30px;
+margin-top: 150px;
+margin-left: 30px;
 }
 #heading{
-  color: #ed7014;
+color: #ed7014;
+font-size: x-large;
 
 }
+p{
+  font-size: large;
+}
 #btn{
+position: relative;
+margin-top: 9px;
+background-color: #ed7014;
+color: white;
+}
+
+#a{
   position: relative;
-  margin-top: 9px;
-  background-color: #ed7014;
-  color: white;
+  padding-top: 0px;
+  font-size: 48px;
 }

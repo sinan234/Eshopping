@@ -11,3 +11,13 @@
         color:white;
         background-color: darkcyan;
       }
+      #newbtn{
+        
+        color: aliceblue;
+        border-radius: 5px;
+        margin-left: 50px;
+      }
+     .a{
+      font-size: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+     }

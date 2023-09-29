@@ -7,7 +7,7 @@ import { Router ,ActivationEnd} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements DoCheck,OnInit {
+export class AppComponent  {
   constructor(private searchService: SearchService, private router:Router) {}
 
   title = 'test';
@@ -23,27 +23,27 @@ export class AppComponent implements DoCheck,OnInit {
   showheader:boolean=true
 
 
-  ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof ActivationEnd && event.snapshot.url[0].path === 'contact') {
-        this.showheader=false;
-      }
+  // ngOnInit() {
+  //   this.router.events.subscribe((event) => {
+  //     if (event instanceof ActivationEnd && event.snapshot.url[0].path === 'contact') {
+  //       this.showheader=false;
+  //     }
       
       
-    });
+  //   });
 
    
      
-  }
+  // }
 
-  ngDoCheck(){
-    this.router.events.subscribe((event) => {
-      if (event instanceof ActivationEnd && event.snapshot.url[0].path != 'contact') {
-        this.showheader=true;
-      }
+  // ngDoCheck(){
+  //   this.router.events.subscribe((event) => {
+  //     if (event instanceof ActivationEnd && event.snapshot.url[0].path != 'contact') {
+  //       this.showheader=true;
+  //     }
        
-    });
-  }
+  //   });
+  // }
 
   @ViewChild('dob') dateofbirth?: ElementRef;
   @ViewChild('age') agenew?: ElementRef;

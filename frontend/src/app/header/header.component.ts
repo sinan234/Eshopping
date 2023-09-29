@@ -2,6 +2,7 @@ import { Component,EventEmitter,Output } from '@angular/core';
 import { LoggedinService } from '../service/loggedin.service';
 import { ApiService } from '../service/api.service';
 import { SearchService } from '../service/search.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { SearchService } from '../service/search.service';
 })
 export class HeaderComponent {
   
-  constructor(private auth:LoggedinService, private search: SearchService){}
+  constructor(public auth:LoggedinService, private search: SearchService, private router: Router){}
    searchValue:string='';
 
   //  changeSearchValue(eventData:Event){
@@ -31,6 +32,7 @@ export class HeaderComponent {
    }
    logout(){
     this.auth.logout();
+    this.router.navigate(['/home']);
    }
 }
 

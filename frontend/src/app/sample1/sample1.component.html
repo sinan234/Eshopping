@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="card" style="width: 18rem;">
     <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQVrZBPAz5Yi2jqsQh_IFDYPE09RNTe_mBag&usqp=CAU" alt="Card image cap">
     <div class="card-body">
@@ -5,4 +6,13 @@
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <button href="#" (click)="onEnroll()" class="btn btn-primary">Buy Now</button>
     </div>
+    <form action="/signup" method="POST">
+      <label for="fname">First name:</label><br>
+      <input type="text" id="fname" name="fname" ><br>
+      <label for="lname">Last name:</label><br>
+      <input type="text" id="lname" name="lname" ><br><br>
+      <input type="submit" value="Submit">
+    
+      
+    </form>
   </div>

@@ -1,6 +1,6 @@
-table{
-    border-radius: 6px;
-    border:2px solid black;
+/* table{
+    border-radius: 10px;
+    border:2px solid gray;
     padding: 3px 4px 4px 4px;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -20,7 +20,7 @@ table{
 	margin-bottom: 20px;
 }
 .table-wishlist table {
-    width: 80%;
+    width: 90%;
 }
 .table-wishlist thead {
     border-bottom: 2px solid gray;
@@ -156,7 +156,7 @@ h5{
     margin-left: 25px;
 }
 th{
-    margin-left: 20px;
+    margin-left: 15px;
 }
 .h5a{
     margin-left: 25px;
@@ -179,4 +179,69 @@ th{
   #btn:hover{
     color:white;
     background-color: darkcyan;
+  }
+  .btnd{
+    width: 100px;;
+    height: 36px;
+    background-color: #ff0000;
+    color: white;
+    border-radius: 25px;
+  }
+  *{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+  }
+  .a{
+    font-size: 18px;
+  } */
+
+  .container {
+    padding: 2rem 0rem;
+  }
+  
+  h4 {
+    margin: 2rem 0rem 1rem;
+  }
+  
+  .table-image {
+    td, th {
+      vertical-align: middle;
+    }
+  }
+  #img{
+    height: 60%;
+    width: 60%;
+  }
+
+h1{
+    color:crimson;
+    
+    font-size: 34px;
+    margin-top: 5px;
+    margin-left: 10px
+}
+table{
+    border-radius: 10px;
+   
+    padding: 3px 4px 4px 4px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.aa{
+    font-size: 16px;
+font-family: Arial, Helvetica, sans-serif;
+vertical-align: middle;
+}
+
+tr:hover td {
+    background-color: rgb(191, 204, 204);
+  }
+
+  table, th, td {
+    border-collapse: collapse;
+    padding: 10px;
+  }
+
+  #main{
+    width: 100%;
+    height: 600px;
   }

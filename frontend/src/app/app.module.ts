@@ -18,10 +18,14 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ProductdetailsComponent } from './productdetails/productdetails.component';
 import { SignupComponent } from './signup/signup.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ButtonstyleDirective } from './customdirective/buttonstyle.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthGuard } from './service/auth.guard';
+import { TokenvalidationService } from './service/tokenvalidation.service';
 
 
 
@@ -54,9 +58,14 @@ import { ButtonstyleDirective } from './customdirective/buttonstyle.directive';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenvalidationService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

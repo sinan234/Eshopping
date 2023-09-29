@@ -1,6 +1,7 @@
-import { Component, DoCheck, ViewChild } from '@angular/core';
+import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
 import { NgForm } from '@angular/forms';
+import { set } from 'mongoose';
 
 
 @Component({
@@ -19,6 +20,12 @@ export class SignupComponent  {
    @ViewChild('check') check:any;
 
   constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    setTimeout(() => {  
+      this.display=true;
+    },40000)};
+
 
   clicked (){
     this.display=false;
@@ -65,6 +72,7 @@ export class SignupComponent  {
           
           console.log('User created successfully');
           console.log('Response:', response);
+          localStorage.setItem('token', response.token);
         },
         (error: any) => {
           console.log('Error creating user');

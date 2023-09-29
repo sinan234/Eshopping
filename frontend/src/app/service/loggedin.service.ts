@@ -9,14 +9,14 @@ export class LoggedinService {
 
   loggedin:boolean=false;
   login(){
-    this.loggedin=true;
+    return !!localStorage.getItem('token');
   }
   logout(){ 
-    this.loggedin=false;
+    localStorage.removeItem('token');
   }
 
-  IsAuth(){
-    
-    return this.loggedin;
+  getToken(){
+    // console.log(localStorage.getItem('token'));
+    return localStorage.getItem('token');
   }
 }

@@ -46,3 +46,7 @@ li {
     background-color: darkcyan;
     color: white;
   }
+  td{
+    position: absolute;
+    top:50%;
+  }

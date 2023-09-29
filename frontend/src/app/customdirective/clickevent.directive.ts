@@ -8,7 +8,7 @@ export class ClickeventDirective {
   constructor(private element:ElementRef, private renderer:Renderer2) { }
   
   @HostListener('mouseenter') onmouseenter(){
-     this.renderer.setStyle(this.element.nativeElement,'backgroundColor','#40E0D0');
+     this.renderer.setStyle(this.element.nativeElement,'backgroundColor','cyan');
      this.renderer.setStyle(this.element.nativeElement,'transition','0.6s');
   }
 

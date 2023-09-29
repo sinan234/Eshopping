@@ -1,8 +1,10 @@
+<app-header></app-header>
+
 <section class="vh-100" style="background-color: #ffffff;">
-  <button id="btn" type="button" class="btn " routerLink="/home">Back</button>
+  <!-- <button id="btn" type="button" class="btn " routerLink="/home">Back</button> -->
 
     <div class="container  h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="row d-flex justify-content-center align-items-center mt-1 h-100">
         <div class="col col-xl-10">
           <div class="card" style="border-radius: 1rem;">
             <div class="row g-0">
@@ -37,7 +39,7 @@
                     </div>
   
                     <a class="small text-muted" href="#!">Forgot password?</a>
-                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#!"
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="/signup"
                         style="color: #393f81;">Register here</a></p>
                     <a href="#!" class="small text-muted">Terms of use.</a>
                     <a href="#!" class="small text-muted">Privacy policy</a>
@@ -55,7 +57,7 @@
     <div class="modal-dialog " role="document">
       <div class="modal-content">
         <div class="modal-header  text-black">
-          <h5 class="modal-title">{{msg}}</h5>
+          <h5 class="modal-title" id="aa">{{msg}}</h5>
           <button type="button" class="close text-black" (click)="clicked()" >
             <span aria-hidden="true">&times;</span>
           </button>
