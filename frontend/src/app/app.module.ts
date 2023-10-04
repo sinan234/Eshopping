@@ -23,10 +23,10 @@ import { LoginComponent } from './login/login.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ButtonstyleDirective } from './customdirective/buttonstyle.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CookieService } from 'ngx-cookie-service';
 import { AuthGuard } from './service/auth.guard';
 import { TokenvalidationService } from './service/tokenvalidation.service';
-
+import { CookieService } from 'ngx-cookie-service';
+import { LoaderComponent } from './loader/loader.component';
 
 
 @NgModule({
@@ -50,7 +50,8 @@ import { TokenvalidationService } from './service/tokenvalidation.service';
          SignupComponent,
          LoginComponent,
          WishlistComponent,
-         ButtonstyleDirective
+         ButtonstyleDirective,
+         LoaderComponent
          
    
   ],
@@ -65,7 +66,7 @@ import { TokenvalidationService } from './service/tokenvalidation.service';
     provide: HTTP_INTERCEPTORS,
     useClass: TokenvalidationService,
     multi: true
-  }],
+  },CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

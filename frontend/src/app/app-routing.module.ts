@@ -15,6 +15,7 @@ import { AuthGuard } from './service/auth.guard';
 import { TestComponent } from './test/test.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenvalidationService } from './service/tokenvalidation.service';
+import { LoaderComponent } from './loader/loader.component';
 
 const appRoute:Routes=[
   // { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const appRoute:Routes=[
   {path:'special' , component:TestComponent, canActivate:[AuthGuard]},
   {path:'wishlist', component:WishlistComponent ,  canActivate:[AuthGuard] },
   {path: "login/sample" , component: Sample1Component},
+  {path:'loader', component:LoaderComponent}
 ]
 
 @NgModule({

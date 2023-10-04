@@ -16,6 +16,7 @@ export class LoginComponent {
   constructor(private http:HttpClient,private service:LoggedinService, private router:Router, private route:ActivatedRoute, private cookie:CookieService){}
   email:string='';
   password:string='';
+  loader:boolean=false;
   msg:string='User already exists';
   logindisplay:boolean=false;
   
@@ -46,24 +47,36 @@ sub(){
     this.logindisplay=true;
     return;
   }
+  this.loader=true;
   this.logindisplay = true;
 
-  this.http.post('http://localhost:3000/login', user)
-    .subscribe(
-      (response: any) => {
-        console.log(response);
-        this.msg = response.message;
-        localStorage.setItem('token', response.token);
-        
-        if(response){
+
+    this.http.post('http://localhost:3000/login', user)
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+          this.msg = response.message;
+          localStorage.setItem('token', response.cookie.token);
           
-          setTimeout(() => {
-              this.router.navigate(['sample'],{relativeTo:this.route});
-          },3000);
-        }
-        form.reset();
-        console.log(this.msg);
-      },
+          if(response){
+            
+            // setTimeout(() => {
+            //   this.router.navigate(['sample'], { relativeTo: this.route, queryParams: { userToken: response.userToken } });
+            // },3000);
+
+            console.log('Received cookie:', response.cookie);
+
+
+            setTimeout(() => {
+              this.router.navigate(['sample'], {
+                relativeTo: this.route,
+                queryParams: { userToken: JSON.stringify(response.cookie)  }
+              });
+            }, 3000);
+          }
+          form.reset();
+          console.log(this.msg);
+        },
       (error: any) => {
         console.log("login failed");
         console.log(error);

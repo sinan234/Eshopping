@@ -2,6 +2,7 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
+import { Token } from '@angular/compiler';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -13,6 +14,7 @@ export class ProductdetailsComponent implements OnInit, DoCheck {
   itemcount:number=1;
   product:any;
   msg:string="";
+  token:any;
   display:boolean=false;
   products:any;
   constructor(private service:Productservice , private activatedroute:ActivatedRoute, private http:HttpClient) { }
@@ -33,6 +35,7 @@ export class ProductdetailsComponent implements OnInit, DoCheck {
 
 
   wishlist() {
+    this.token=localStorage.getItem('token');
     console.log("wishlist button clicked");
     this.display = true;
     const wishlist = {
@@ -42,14 +45,17 @@ export class ProductdetailsComponent implements OnInit, DoCheck {
       product_image: this.product.Thumbnail,
       product_id: this.product.Product_ID
     };
-    this.http.post('http://localhost:3000/create_wishlist', wishlist).subscribe((res: any) => {
+    const headers = {
+      'Authorization': 'Bearer ' + this.token
+    };
+    this.http.post('http://localhost:3000/create_wishlist', wishlist,{headers}).subscribe((res: any) => {
       console.log("product added successfully");
       console.log(res);
       this.msg = res.message;
     }, (error: any) => {
       console.log("error occurred");
       console.log(error);
-      this.msg = error.error.message; // Update the error message in the frontend
+      this.msg = error.error.message;
     });
     console.log("added to wishlist");
   }
