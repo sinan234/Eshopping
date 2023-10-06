@@ -6,6 +6,7 @@ const db = require('./src/dbconnection');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const User = require('./models/usermodel');
+const Cart= require('./models/cart');
 const cors = require('cors');
 const Productwish = require('./models/wishlist');
 const bodyParser = require('body-parser');
@@ -13,7 +14,7 @@ const api= require('./routes/api');
 const sessionStore = {};
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const sessionTimeout = 300 * 1 * 1000;
+const sessionTimeout = 20 * 2000 * 1000;
 db.connect()
   
 // app.use('/', api);
@@ -21,6 +22,13 @@ db.connect()
 app.use(cors());
 app.use(cookieParser());
 
+// API Key - rzp_test_lwlav4cxjCCLRq
+// API Secret - 8O5tQ9B7jsoUNuilQJKYLzMc
+
+const razorpay = new Razorpay({
+  key_id: 'rzp_test_lwlav4cxjCCLRq',
+  key_secret: '8O5tQ9B7jsoUNuilQJKYLzMc',
+});
 app.use(bodyParser.json());
 
 app.get('/',  function (req, res) {
@@ -36,27 +44,6 @@ app.get('/special', verifyToken,function (req, res) {
   res.json(specialEvents);
 });
 
-// app.get('/user', (req, res) => {
-//   try {
-//     const token = req.headers.authorization.split(' ')[1];
-//     const decodedToken = jwt.verify(token, 'secretKey');
-//     const userId = decodedToken.subject;
-
-//     // Retrieve user information based on the userId
-//     // Replace this with your own implementation to fetch user data from the database
-//     const user = User.findById(userId);
-
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-
-//     // Return the user information
-//     res.status(200).json(user);
-//   } catch (error) {
-//     console.log('Error retrieving user information:', error);
-//     return res.status(500).json({ message: 'Error retrieving user information' });
-//   }
-// });
 
 
 app.post('/create_user', async(req, res) => {
@@ -81,16 +68,15 @@ app.post('/create_wishlist', async (req, res) => {
     const{product_name,product_id,product_price,product_image, product_available} = req.body;
     const token = req.headers.authorization.split(' ')[1];
     console.log('Token:', token);
-    const user = await User.findOne({ token });
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid token' });
-    }
+    const decodedToken=jwt.verify(token, 'secretKey');
+    const user_id = decodedToken.userId;
+   
     const product = await Productwish.findOne({product_id});
     if(product){
       console.log('Product already exists');
       return res.status(400).json({message: "Product already exists"});
     }
-    const newProduct = new Productwish({product_name,product_id,product_price,product_image, product_available});
+    const newProduct = new Productwish({product_name,product_id,product_price,product_image, product_available, user_id});
     await newProduct.save();
     console.log('Product added:', newProduct);
     res.status(201).json({message: "Product added successfully"});
@@ -102,14 +88,22 @@ app.post('/create_wishlist', async (req, res) => {
 
 app.get('/get_wishlist',async (req, res) => {
   try{
-    const products = await Productwish.find({});
-    // console.log('Products:', products);
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken=jwt.verify(token, 'secretKey');
+    const user_id = decodedToken.userId;
+    const products = await Productwish.find({user_id})
+    if(!products){
+      console.log('No products found');
+      return res.status(400).json({message: "No products found"});
+    }
+
+  
     res.status(200).json({products});
   } catch(error){
     console.log('Error getting products:', error);
     res.status(500).json({message: "Error getting products"});
   }
-});+
+});
 
 app.delete('/remove_wishlist', async (req, res) => {
     try{
@@ -125,6 +119,52 @@ app.delete('/remove_wishlist', async (req, res) => {
 
 });
 
+app.post('/addToCart', async (req, res) => {
+  try{ const {product_id} = req.body;
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken=jwt.verify(token, 'secretKey');
+  const user_id = decodedToken.userId;
+  const newCart = new Cart({product_id, user_id});
+  newCart.save();
+  res.status(201).json({message: "Product added to cart successfully"});
+}catch(error){
+   console.log('Error adding product to cart:', error);
+   res.status(500).json({message: "Error adding product to cart"});
+}
+});
+
+app.get('/getCart', async (req, res) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken=jwt.verify(token, 'secretKey');
+  const user_id = decodedToken.userId;
+  const products = await Cart.find({user_id})
+  if(!products){
+    console.log('No products found');
+    return res.status(400).json({message: "No products found"});
+  }
+  res.json(products);
+});
+
+app.delete('/removeCart/:id', async (req, res) => {
+  try {
+    const product_id = req.params.id;
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, 'secretKey');
+    const user_id = decodedToken.userId;
+
+    const product = await Cart.findOneAndDelete({ product_id, user_id });
+
+    if (!product) {
+      console.log('No product found in the cart');
+      return res.status(400).json({ message: "No product found in the cart" });
+    }
+
+    res.json({ message: "Product removed from cart successfully" });
+  } catch (error) {
+    console.log('Error removing product from cart:', error);
+    res.status(500).json({ message: "Error removing product from cart" });
+  }
+});
 
 
 app.post('/login', async (req, res) => {
