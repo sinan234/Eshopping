@@ -25,6 +25,10 @@ margin-top: 10px;
     color: white;
 
 }
+#main{
+    width: 100%;
+    height: 600px;
+  }
 #btn:hover{
     background-color: darkcyan;
     color: white;

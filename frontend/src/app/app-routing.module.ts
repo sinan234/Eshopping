@@ -13,25 +13,34 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { Sample1Component } from './sample1/sample1.component';
 import { AuthGuard } from './service/auth.guard';
 import { TestComponent } from './test/test.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenvalidationService } from './service/tokenvalidation.service';
 import { LoaderComponent } from './loader/loader.component';
+import { DetailsComponent } from './details/details.component';
 
 const appRoute:Routes=[
   // { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path:'', component: BodyComponent}
 ,  {path:'home', component: BodyComponent},
   {path:'about', component: AboutComponent},
-  {path:'products', component: ProductComponent , canActivate:[AuthGuard]},
-  // {path:'products/:id', component: ProductdetailsComponent, canActivate:[Productguard]},
-  {path:'products/:id', component: ProductdetailsComponent},
+  // {
+  //   path: 'login/products',
+  //   component: ProductComponent,
+  //   canActivate: [AuthGuard],
+  //   children: [
+  //     { path: 'buy/:id', component: ProductdetailsComponent },
+  //     { path: 'details/:id', component: DetailsComponent }
+  //   ]
+  // }
+  // ,
+  {path:'login/products', component: ProductComponent, canActivate:[AuthGuard]},
+  {path:'login/products/buy/:id', component: ProductdetailsComponent},
   {path:'contact', component: ContactComponent},
   {path:'signup', component: SignupComponent},
   {path:'login', component: LoginComponent},
-  {path:'special' , component:TestComponent, canActivate:[AuthGuard]},
+  {path:'login/cart' , component:ProductdetailsComponent, canActivate:[AuthGuard]},
   {path:'wishlist', component:WishlistComponent ,  canActivate:[AuthGuard] },
   {path: "login/sample" , component: Sample1Component},
-  {path:'loader', component:LoaderComponent}
+  {path:'loader', component:LoaderComponent},
+  {path:'login/products/details/:id',component:DetailsComponent}
 ]
 
 @NgModule({

@@ -1,64 +1,117 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
-import { Token } from '@angular/compiler';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
   styleUrls: ['./productdetails.component.css']
 })
-export class ProductdetailsComponent implements OnInit, DoCheck {
+export class ProductdetailsComponent implements OnInit, OnChanges {
   productid:any;
   productprice:number=0;
-  itemcount:number=1;
   product:any;
   msg:string="";
   token:any;
+  no:number=1;
+  length:any;
   display:boolean=false;
   products:any;
+  filteredObjects:any;
+  empty:boolean=false;
+  totalamount:number=0;
+  aftership:any;
   constructor(private service:Productservice , private activatedroute:ActivatedRoute, private http:HttpClient) { }
   
-  ngDoCheck(): void {
-    this.productprice=this.itemcount*this.product.Price;
+  ngOnChanges(): void {
+    this.calculateTotal();
+  }
+  
+ 
+  decrement(item: any) {
+    
+    if (!item.itemcount) {
+      item.itemcount = 1;
+    } else {
+      item.itemcount = parseInt(item.itemcount) + 1;
+      this.calculateTotal();
+
+    }
+  }
+  
+  increment(item: any) {
+    
+    if (item.itemcount && item.itemcount > 0) {
+      item.itemcount = parseInt(item.itemcount) - 1;
+      this.calculateTotal();
+
+
+    }
   }
    
-   ngOnInit(){
-    this.productid=this.activatedroute.snapshot.paramMap.get('id');
-    this.product=this.service.product.find(x=> x.Product_ID==this.productid)
-    this.products=this.service.product;
-    console.log(this.product)
+ calculateTotal(){
+  this.totalamount=0;
+  for(let prod of this.filteredObjects){
+    this.totalamount+=prod.Price*prod.itemcount;
+    this.aftership=this.totalamount+50;
   }
-  clicked(){
-    this.display=false;
-  }
+ }
 
+  getCartProducts(){
+    this.http.get('http://localhost:3000/getCart').subscribe((res: any) => {
 
-  wishlist() {
-    this.token=localStorage.getItem('token');
-    console.log("wishlist button clicked");
-    this.display = true;
-    const wishlist = {
-      product_name: this.product.Name,
-      product_available: this.product.availbale,
-      product_price: this.product.Price,
-      product_image: this.product.Thumbnail,
-      product_id: this.product.Product_ID
-    };
-    const headers = {
-      'Authorization': 'Bearer ' + this.token
-    };
-    this.http.post('http://localhost:3000/create_wishlist', wishlist,{headers}).subscribe((res: any) => {
-      console.log("product added successfully");
-      console.log(res);
-      this.msg = res.message;
-    }, (error: any) => {
-      console.log("error occurred");
-      console.log(error);
-      this.msg = error.error.message;
+    console.log("products get from server");
+    console.log(res);
+    this.products = Object.values(res);
+    this.length=this.products.length;
+    console.log(this.length);
+    this.filteredObjects = this.service.product.filter((product: any) => {
+      return this.products.some((newproduct:any) => {
+        return product.Product_ID === parseInt(newproduct.product_id);
+      });
     });
-    console.log("added to wishlist");
+
+    if(this.length==0){
+        this.empty=true;
+    }
+    this.calculateTotal();
+    console.log(this.filteredObjects);
+
+    
+  }, (error: any) => {
+    console.log("error occurred");
+    console.log(error);
+  });
+
   }
+ 
+  remove(id:number){
+    console.log("remove button clicked")
+    this.http.delete('http://localhost:3000/removeCart/'+id).subscribe((res: any) => {
+      console.log('product deleted from cart');
+      console.log(res)
+      this.getCartProducts();
+      this.calculateTotal();
+   } ,(error: any) => {
+      console.log('error occured');
+      console.log(error);
+   });
+  }
+
+
+
+   ngOnInit(){
+    // this.productid=this.activatedroute.snapshot.paramMap.get('id');
+    // this.product=this.service.product.find(x=> x.Product_ID==this.productid)
+    // this.products=this.service.product;
+    // console.log(this.product)
+    this.getCartProducts();
+  }
+clicked(){
+  this.display=false;
+}
+  
+ 
 }
 
 

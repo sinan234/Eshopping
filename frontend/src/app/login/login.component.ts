@@ -68,11 +68,13 @@ sub(){
 
 
             setTimeout(() => {
-              this.router.navigate(['sample'], {
+              this.router.navigate(['products'], {
                 relativeTo: this.route,
                 queryParams: { userToken: JSON.stringify(response.cookie)  }
               });
             }, 3000);
+
+            
           }
           form.reset();
           console.log(this.msg);

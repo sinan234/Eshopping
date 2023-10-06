@@ -1,0 +1,19 @@
+#am{
+    padding-left: 6px;
+    margin-left: 6px;
+}
+#amd{
+    padding-left: 6px;
+    margin-left: 6px;
+    width: 100px;
+  
+}
+
+.wish{
+    display: flex;
+    justify-content: space-between;
+}
+.a{
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}

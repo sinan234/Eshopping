@@ -27,6 +27,8 @@ import { AuthGuard } from './service/auth.guard';
 import { TokenvalidationService } from './service/tokenvalidation.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LoaderComponent } from './loader/loader.component';
+import { FooterComponent } from './footer/footer.component';
+import { DetailsComponent } from './details/details.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { LoaderComponent } from './loader/loader.component';
          LoginComponent,
          WishlistComponent,
          ButtonstyleDirective,
-         LoaderComponent
+         LoaderComponent,
+         FooterComponent,
+         DetailsComponent
          
    
   ],

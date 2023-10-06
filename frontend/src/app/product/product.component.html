@@ -20,8 +20,8 @@
           <h5 id="a" class="card-title">Rs {{item.Price}}</h5>
           <p class="card-text" [ngStyle]="{color: item.availbale==='Available'? 'Green' : 'Red'}">{{item.availbale}}</p>
           <div class="d-flex ">
-            <a routerLink="{{item.Product_ID }}" class="btn btn-primary me-auto">Buy Now</a>
-            <a href="#" class="btn btn-secondary ms-auto"> Details</a>
+            <a (click)="buy(item.Product_ID)" class="btn btn-primary me-auto">Buy Now</a>
+            <a (click)="details(item.Product_ID)" class="btn btn-secondary ms-auto"> Details</a>
   
           </div>
         </div>
