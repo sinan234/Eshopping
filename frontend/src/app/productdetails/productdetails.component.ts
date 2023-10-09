@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
 @Component({
@@ -13,6 +13,7 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
   product:any;
   msg:string="";
   token:any;
+  cookieValue:any;
   no:number=1;
   length:any;
   display:boolean=false;
@@ -21,12 +22,25 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
   empty:boolean=false;
   totalamount:number=0;
   aftership:any;
-  constructor(private service:Productservice , private activatedroute:ActivatedRoute, private http:HttpClient) { }
+  constructor(private service:Productservice, private router:Router , private route:ActivatedRoute, private http:HttpClient) { }
   
   ngOnChanges(): void {
     this.calculateTotal();
   }
   
+  checkout(amount:any){
+    const id = this.route.snapshot.paramMap.get('id'); 
+    confirm("Are you sure you want to checkout?");
+    console.log("checkout button clicked")
+    this.router.navigate(['login','products', 'buy',id, 'checkout'], {
+      queryParams: {
+        amount: amount,
+        products: JSON.stringify(this.filteredObjects),
+        userToken: JSON.stringify(this.cookieValue)
+      }
+    });
+        
+  }
  
   decrement(item: any) {
     
@@ -101,10 +115,19 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
 
 
    ngOnInit(){
+
+    this.route.queryParams.subscribe((params) => {
+      const userToken = params['userToken'];  
+      console.log('User Token:', userToken);
+      this.cookieValue = JSON.parse(userToken);
+      console.log(this.cookieValue);
+    });
     // this.productid=this.activatedroute.snapshot.paramMap.get('id');
     // this.product=this.service.product.find(x=> x.Product_ID==this.productid)
     // this.products=this.service.product;
     // console.log(this.product)
+
+
     this.getCartProducts();
   }
 clicked(){

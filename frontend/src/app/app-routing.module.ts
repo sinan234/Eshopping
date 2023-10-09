@@ -15,6 +15,7 @@ import { AuthGuard } from './service/auth.guard';
 import { TestComponent } from './test/test.component';
 import { LoaderComponent } from './loader/loader.component';
 import { DetailsComponent } from './details/details.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const appRoute:Routes=[
   // { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -40,7 +41,8 @@ const appRoute:Routes=[
   {path:'wishlist', component:WishlistComponent ,  canActivate:[AuthGuard] },
   {path: "login/sample" , component: Sample1Component},
   {path:'loader', component:LoaderComponent},
-  {path:'login/products/details/:id',component:DetailsComponent}
+  {path:'login/products/details/:id',component:DetailsComponent},
+  {path:'login/products/buy/:id/checkout' , component:CheckoutComponent}
 ]
 
 @NgModule({

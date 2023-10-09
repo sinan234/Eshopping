@@ -29,6 +29,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoaderComponent } from './loader/loader.component';
 import { FooterComponent } from './footer/footer.component';
 import { DetailsComponent } from './details/details.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { DetailsComponent } from './details/details.component';
          TestComponent,
          SampleDirective,
          ClickeventDirective,
+         CheckoutComponent,
          HighlightDirective,
          IfcaseDirective,
          Sample1Component,
@@ -55,7 +57,8 @@ import { DetailsComponent } from './details/details.component';
          ButtonstyleDirective,
          LoaderComponent,
          FooterComponent,
-         DetailsComponent
+         DetailsComponent,
+         CheckoutComponent
          
    
   ],
