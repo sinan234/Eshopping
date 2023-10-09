@@ -25,10 +25,11 @@ app.use(cookieParser());
 // API Key - rzp_test_lwlav4cxjCCLRq
 // API Secret - 8O5tQ9B7jsoUNuilQJKYLzMc
 
-const razorpay = new Razorpay({
-  key_id: 'rzp_test_lwlav4cxjCCLRq',
-  key_secret: '8O5tQ9B7jsoUNuilQJKYLzMc',
-});
+// const razorpay = new Razorpay({
+//   key_id: 'rzp_test_lwlav4cxjCCLRq',
+//   key_secret: '8O5tQ9B7jsoUNuilQJKYLzMc'
+// });
+
 app.use(bodyParser.json());
 
 app.get('/',  function (req, res) {
@@ -61,6 +62,23 @@ app.post('/create_user', async(req, res) => {
     res.status(500).json({ message: "Error creating user" });
   }
 });
+
+app.post('/payment', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken=jwt.verify(token, 'secretKey');
+    const user_id = decodedToken.userId;
+    console.log('User id:', user_id);
+    const { paymentid, products, amount } = req.body;
+    console.log('Payment id:', paymentid);
+    console.log('Amount:', amount);
+   
+    res.status(200).json({ message: 'Payment successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error making payment' });
+  }
+});
+
 
 app.post('/create_wishlist', async (req, res) => {
    try{
@@ -240,28 +258,6 @@ function verifyToken(req, res, next) {
     return res.status(401).send('Unauthorized request');
   }
 }
-
-
-
-
-// function verifyToken(req, res, next){
-//     if(!req.headers.authorization){
-//       return res.status(401).send('Unauthorized request')
-//     }
-//     let token = req.headers.authorization.split(' ')[1]
-//     if(token === 'null'){
-//       return res.status(401).send('Unauthorized request')    
-//     }
-//     let payload = jwt.verify(token, 'secretKey')
-//     if(!payload){
-//       return res.status(401).send('Unauthorized request')    
-//     }
-//     req.userId = payload.subject
-//     next();
-// }
-
-
-
 
 const port = 3000;
 app.listen(port, () => {
