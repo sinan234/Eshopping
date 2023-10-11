@@ -19,6 +19,7 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
   display:boolean=false;
   products:any;
   filteredObjects:any;
+  orderedproducts:any;
   empty:boolean=false;
   totalamount:number=0;
   aftership:any;
@@ -35,7 +36,7 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
     this.router.navigate(['login','products', 'buy',id, 'checkout'], {
       queryParams: {
         amount: amount,
-        products: JSON.stringify(this.filteredObjects),
+        products: JSON.stringify(this.orderedproducts),
         userToken: JSON.stringify(this.cookieValue)
       }
     });
@@ -85,11 +86,14 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
       });
     });
 
+    this.orderedproducts=this.filteredObjects.map((obj:any)=> obj.Product_ID)
+    console.log("ordered products", this.orderedproducts);
+
     if(this.length==0){
         this.empty=true;
     }
     this.calculateTotal();
-    console.log(this.filteredObjects);
+    console.log("filtered  products",this.filteredObjects);
 
     
   }, (error: any) => {

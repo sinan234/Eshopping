@@ -17,7 +17,7 @@
             <a class="nav-link" routerLink="/wishlist" routerLinkActive="active">Wishlist</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/about"  routerLinkActive="active">  About</a>
+            <a class="nav-link" href="#about"  routerLinkActive="active">  About</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/login/cart"  routerLinkActive="active">  My Cart</a>
@@ -30,17 +30,17 @@
           
         </ul>
         <div class="d-flex p-2 ">
-          <button *ngIf="!auth.login()" class="btn btn-outline-success  " type="button" routerLink="/signup" routerLinkActive="lactive" >Signup</button>
-          <button *ngIf="!auth.login()" class="btn btn-outline-success ms-4 me-4 " type="button" routerLink="/login"  routerLinkActive="lactive" (click)="login()">Login</button>
+          <button  id="btn" *ngIf="!auth.login()" class="btn btn-outline-success  " type="button" routerLink="/signup" routerLinkActive="lactive" >Signup</button>
+          <button id="btn" *ngIf="!auth.login()" class="btn btn-outline-success ms-4 me-4 " type="button" routerLink="/login"  routerLinkActive="lactive" (click)="login()">Login</button>
         </div>
         <div class="d-flex p-2 ">
           <!-- <button *ngIf="auth.login()" class="btn btn-outline-success  " type="button" routerLink="/signup" routerLinkActive="lactive" >Signup</button> -->
-          <button *ngIf="auth.login()" class="btn btn-outline-success ms-4 me-4 " type="button" routerLink="/login"  routerLinkActive="lactive" (click)="logout()">Logout</button>
+          <button id="btn" *ngIf="auth.login()" class="btn btn-outline-success ms-4 me-4 " type="button" routerLink="/login"  routerLinkActive="lactive" (click)="logout()">Logout</button>
         </div>
       
         <form class="d-flex" role="search">
           <input  class="form-control me-2" type="text" name="search" aria-label="Search" [(ngModel)]="searchValue" (input)="onSearchtextchanged()">
-          <button  class="btn btn-outline-success" type="submit" >Search</button>
+          <button id="btn" class="btn btn-outline-success" type="submit" >Search</button>
         </form>
        
       </div>

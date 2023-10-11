@@ -16,6 +16,7 @@ import { TestComponent } from './test/test.component';
 import { LoaderComponent } from './loader/loader.component';
 import { DetailsComponent } from './details/details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { SuccessComponent } from './success/success.component';
 
 const appRoute:Routes=[
   // { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,7 +43,10 @@ const appRoute:Routes=[
   {path: "login/sample" , component: Sample1Component},
   {path:'loader', component:LoaderComponent},
   {path:'login/products/details/:id',component:DetailsComponent},
-  {path:'login/products/buy/:id/checkout' , component:CheckoutComponent}
+  {path:'login/products/buy/:id/checkout' , component:CheckoutComponent},
+  {path:'login/products/buy/checkout/success' , component:SuccessComponent},
+  
+
 ]
 
 @NgModule({

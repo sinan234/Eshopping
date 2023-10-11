@@ -16,9 +16,7 @@ export class CheckoutComponent implements OnInit {
   display:boolean=false;
   constructor(private http:HttpClient, private route:ActivatedRoute, private router:Router) { }
 
-  displayf(){
-    this.display=true;
-  }
+
     ngOnInit(): void {
       this.route.queryParams.subscribe((params) => {
         const userToken = params['userToken'];  
@@ -43,19 +41,29 @@ export class CheckoutComponent implements OnInit {
           theme:{
             color:"#6466e3",
             display:"block",
-          },handler: (response: any) => {
+          },handler: async(response: any) => {
             console.log('payment_id', response.razorpay_payment_id);
             const paymentId = response.razorpay_payment_id;
-            this.displayf();
+            
              const data = {
               paymentId: paymentId,
               amount: this.amount,
               products: this.orders,
               
             };
-            this.http.post('http://localhost:3000/payment', data).subscribe((res) => {
+            console.log(data);
+            await this.http.post('http://localhost:3000/payment', data).subscribe((res) => {
                 console.log(res);
                 console.log('Payment Successful');
+                 this.display=true;
+                 this.router.navigate(['login','products', 'buy', 'checkout','success'], {queryParams:{
+                    amount:this.amount,
+                    products:this.orders,
+                    paymentId:paymentId 
+                
+                }
+                 });
+                 console.log("display",this.display); 
 
           },(error: any) => {
                 console.log(error);

@@ -1,14 +1,30 @@
-import { Component,Input } from '@angular/core';
+import { Component,Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { trigger, transition, useAnimation } from '@angular/animations';
+import { fadeIn, fadeInRight, fadeInUp } from 'ng-animate';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
-  styleUrls: ['./body.component.css']
+  styleUrls: ['./body.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition('* => *', useAnimation(fadeIn, {
+        params: { timing: 4, delay: 0 }
+      }))
+    ]),
+    trigger('fadeInUp', [
+      transition('* => *', useAnimation(fadeInUp, {
+        params: { timing: 8, delay: 10 }
+      }))
+    ])
+ ]
 })
-export class BodyComponent {
+export class BodyComponent  {
   constructor(private router: Router) { }
+
+  
 
     button:string='Click here';
     buttonClicked: boolean = false;

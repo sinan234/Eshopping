@@ -7,13 +7,21 @@ import { Router ,ActivationEnd} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  {
+export class AppComponent implements OnInit  {
   constructor(private searchService: SearchService, private router:Router) {}
+  public showPreloader = true;
 
   title = 'test';
 
   searchtext:string='';
   
+
+  ngOnInit() {
+    const duration = 1000;
+    setTimeout(() => {
+      this.showPreloader = false;
+    }, duration);
+  }
   onsearchtextchange(data:string){
       this.searchtext=data;
       this.searchService.setSearchValue(this.searchtext);

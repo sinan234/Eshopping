@@ -30,6 +30,8 @@ import { LoaderComponent } from './loader/loader.component';
 import { FooterComponent } from './footer/footer.component';
 import { DetailsComponent } from './details/details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { SuccessComponent } from './success/success.component';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 
 @NgModule({
@@ -58,7 +60,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
          LoaderComponent,
          FooterComponent,
          DetailsComponent,
-         CheckoutComponent
+         CheckoutComponent,
+         SuccessComponent,
+         
          
    
   ],
@@ -67,13 +71,15 @@ import { CheckoutComponent } from './checkout/checkout.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
+
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenvalidationService,
     multi: true
-  },CookieService],
+  },CookieService, ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

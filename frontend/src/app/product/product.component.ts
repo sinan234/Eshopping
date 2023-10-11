@@ -3,6 +3,8 @@ import { SearchService } from '../service/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoggedinService } from '../service/loggedin.service';
 import { Productservice } from '../service/products.service';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -10,7 +12,7 @@ import { Productservice } from '../service/products.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements DoCheck, OnInit  {
-  constructor(private searchService: SearchService, private service:Productservice, private router:Router, private route:ActivatedRoute, private logservice:LoggedinService) {}
+  constructor(private searchService: SearchService,private toastr:ToastrService,private http:HttpClient, private service:Productservice, private router:Router, private route:ActivatedRoute, private logservice:LoggedinService) {}
 
   @Input() newsearcha: string = '';
   sr:string=''
@@ -67,8 +69,20 @@ export class ProductComponent implements DoCheck, OnInit  {
 
   btnclick: boolean = true;
  
-  buy(id: number) {
-    
+  buy(id: number, stock: string) {
+    if (stock == "Not Available") {
+      const toastrMessage = "Product is not available";
+      this.toastr.error("Product is not available");
+      return;
+    }   
+    this.http.post('http://localhost:3000/addToCart', {product_id:id} ) .subscribe((res:any)=>{
+       console.log("added to cart");
+  },(error:any)=>{
+      console.log("error occurred");
+  });
+
+
+
     this.router.navigate(['login','products', 'buy', id],{ queryParams:{userToken: JSON.stringify( this.cookieValue)}});
   }
    

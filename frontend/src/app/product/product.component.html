@@ -8,19 +8,19 @@
    
   
   <div id="cardc" class="d-flex justify-content-center flex-wrap ms-1 p-1 " >
-    <div *ngFor="let item of product; let i = index" >
+    <div *ngFor="let item of product; let i = index"  id="st">
     <!-- <div [appHighlight]="item.Price=== mostpricedproduct.Price"> -->
     
     <div *ngIf=" sr==='' || item.Name.toLowerCase().includes(sr)">
       <div >
       <div id="cardp" class="card " style="width: 20rem; height: 30rem;" *ngIf="itemcountradio==='All' || itemcountradio===item.availbale" >
-        <img id="img" [src]="item.Thumbnail" class="card-img-top" alt="...">
+        <img id="img" [src]="item.Thumbnail" class="card-img-top img-fluid" alt="...">
         <div class="card-body">
           <h5 id="a" class="card-title">{{item.Name}}</h5>
           <h5 id="a" class="card-title">Rs {{item.Price}}</h5>
           <p class="card-text" [ngStyle]="{color: item.availbale==='Available'? 'Green' : 'Red'}">{{item.availbale}}</p>
           <div class="d-flex ">
-            <a (click)="buy(item.Product_ID)" class="btn btn-primary me-auto">Buy Now</a>
+            <a (click)="buy(item.Product_ID, item.availbale)" class="btn btn-primary me-auto">Buy Now</a>
             <a (click)="details(item.Product_ID)" class="btn btn-secondary ms-auto"> Details</a>
   
           </div>
