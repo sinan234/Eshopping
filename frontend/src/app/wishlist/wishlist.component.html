@@ -74,7 +74,7 @@
                 {{ item.product_available }}
               </td>
               <td class="aa" width="15%">
-                <button class="btn btn-info small-btn rounded-pill">Add to Cart</button>
+                <button class="btn btn-info small-btn rounded-pill" (click)="add(item.product_id)">Add to Cart</button>
               </td>
               <td class="aa" width="15%">
                 <button (click)="remove(item.product_id)" class="btn btn-danger small-btn rounded-pill">Remove</button>

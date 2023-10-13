@@ -19,9 +19,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './success/success.component';
 
 const appRoute:Routes=[
-  // { path: '', redirectTo: 'home', pathMatch: 'full' },
-  {path:'', component: BodyComponent}
-,  {path:'home', component: BodyComponent},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  // {path:'', component: BodyComponent}
+  {path:'home', component: BodyComponent},
   {path:'about', component: AboutComponent},
   // {
   //   path: 'login/products',
@@ -35,13 +35,14 @@ const appRoute:Routes=[
   // ,
   {path:'login/products', component: ProductComponent, canActivate:[AuthGuard]},
   {path:'login/products/buy/:id', component: ProductdetailsComponent},
-  {path:'contact', component: ContactComponent},
+  {path:'home/contact', component: ContactComponent},
   {path:'signup', component: SignupComponent},
   {path:'login', component: LoginComponent},
   {path:'login/cart' , component:ProductdetailsComponent, canActivate:[AuthGuard]},
-  {path:'wishlist', component:WishlistComponent ,  canActivate:[AuthGuard] },
+  {path:'login/wishlist', component:WishlistComponent ,  canActivate:[AuthGuard] },
   {path: "login/sample" , component: Sample1Component},
   {path:'loader', component:LoaderComponent},
+  {path:'login/cart/checkout', component:CheckoutComponent},
   {path:'login/products/details/:id',component:DetailsComponent},
   {path:'login/products/buy/:id/checkout' , component:CheckoutComponent},
   {path:'login/products/buy/checkout/success' , component:SuccessComponent},

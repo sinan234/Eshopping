@@ -234,6 +234,7 @@ vertical-align: middle;
 
 tr:hover td {
     background-color: rgb(191, 204, 204);
+    transform: scale(1.05);
   }
 
   table, th, td {

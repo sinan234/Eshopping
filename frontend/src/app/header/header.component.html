@@ -10,18 +10,19 @@
             <a class="nav-link " routerLinkActive="active" aria-current="page" routerLink="/home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/login/products" routerLinkActive="active">Products</a>
+            <a class="nav-link" *ngIf="auth.login()" routerLink="/login/products" routerLinkActive="active">Products</a>
           </li>
          
           <li class="nav-item">
-            <a class="nav-link" routerLink="/wishlist" routerLinkActive="active">Wishlist</a>
+            <a class="nav-link"*ngIf="auth.login()" routerLink="/login/wishlist" routerLinkActive="active">Wishlist</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="auth.login()" routerLink="/login/cart"  routerLinkActive="active">  My Cart</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#about"  routerLinkActive="active">  About</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/login/cart"  routerLinkActive="active">  My Cart</a>
-          </li>
+        
           <li class="nav-item">
             <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact us</a>
             <span class="hover-effect"></span>
@@ -38,7 +39,7 @@
           <button id="btn" *ngIf="auth.login()" class="btn btn-outline-success ms-4 me-4 " type="button" routerLink="/login"  routerLinkActive="lactive" (click)="logout()">Logout</button>
         </div>
       
-        <form class="d-flex" role="search">
+        <form class="d-flex" role="search" *ngIf="show">
           <input  class="form-control me-2" type="text" name="search" aria-label="Search" [(ngModel)]="searchValue" (input)="onSearchtextchanged()">
           <button id="btn" class="btn btn-outline-success" type="submit" >Search</button>
         </form>

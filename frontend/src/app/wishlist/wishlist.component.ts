@@ -1,6 +1,7 @@
 import { Component ,DoCheck,OnInit} from '@angular/core';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-wishlist',
@@ -8,12 +9,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./wishlist.component.css']
 })
 export class WishlistComponent implements OnInit{
-  constructor(private productservice:Productservice, private http:HttpClient){}
+  constructor(private productservice:Productservice, private http:HttpClient, private toastr:ToastrService){}
   wishlist:any;
   newwish:any;
   product_id:any;
   sno:number=0;
   display:boolean=false;
+  
   // ngOnInit(){
   //   this.wishlist=this.productservice.product;
   //   console.log(this.wishlist);
@@ -38,6 +40,17 @@ getData(){
 });
 }
 
+  add(id:number){
+    const cart={product_id:id}
+      this.http.post('http://localhost:3000/addToCart', cart )
+      .subscribe((res:any)=>{
+        console.log("added to cart");
+        console.log(res);
+        this.toastr.success("Product added to cart");
+      },(error:any)=>{
+        this.display=true;
+        console.log("error occurred");  
+      })}
   
 
   remove(item:any){

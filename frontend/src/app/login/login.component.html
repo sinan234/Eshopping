@@ -53,12 +53,12 @@
     </div>
   </section>
 
-  <div *ngIf="logindisplay" class="modal show d-block" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel">
+  <div  *ngIf="logindisplay" class="modal show d-block" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog " role="document">
       <div class="modal-content">
         <div class="modal-header  text-black">
-          <h5 class="modal-title" id="aa">{{msg}}</h5>
-          <button type="button" class="close text-black" (click)="clicked()" >
+          <h5 class="modal-title ms-3 mt-2" id="aa">{{msg}}</h5>
+          <button type="button" id="btnn" class="close text-black" (click)="clicked()" >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

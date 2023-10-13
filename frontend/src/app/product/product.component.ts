@@ -5,45 +5,50 @@ import { LoggedinService } from '../service/loggedin.service';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { HeaderidentifierService } from '../service/headeridentifier.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements DoCheck, OnInit  {
-  constructor(private searchService: SearchService,private toastr:ToastrService,private http:HttpClient, private service:Productservice, private router:Router, private route:ActivatedRoute, private logservice:LoggedinService) {}
+export class ProductComponent implements DoCheck , OnInit {
+  constructor(private headerid:HeaderidentifierService,private searchService: SearchService,private toastr:ToastrService,private http:HttpClient, private service:Productservice, private router:Router, private route:ActivatedRoute, private logservice:LoggedinService) {}
 
   @Input() newsearcha: string = '';
   sr:string=''
   cookieValue:any;
+
+  ngOnInit(): void {
+    this.headerid.IsProductPage();
+  }
   ngDoCheck() {
     this.newsearcha = this.searchService.getSearchValue();
     this.sr=this.newsearcha
     console.log(this.sr)
   }
-  ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      const userToken = params['userToken'];  
-      console.log('User Token:', userToken);
-      this.cookieValue = JSON.parse(userToken);
-      console.log('Cookie Value:', this.cookieValue);
-      const token = this.cookieValue.token;
-      const sessionIndicator =  this.cookieValue.sessionIndicator;
-      const sessionend= this.cookieValue.sessionEnd;
-      console.log('Token:', token);
-      console.log('Session Indicator:', sessionIndicator);
-      console.log('Session End:', sessionend);
+  // ngOnInit(): void {
+  //   this.route.queryParams.subscribe((params) => {
+  //     const userToken = params['userToken'];  
+  //     console.log('User Token:', userToken);
+  //     this.cookieValue = JSON.parse(userToken);
+  //     console.log('Cookie Value:', this.cookieValue);
+  //     const token = this.cookieValue.token;
+  //     const sessionIndicator =  this.cookieValue.sessionIndicator;
+  //     const sessionend= this.cookieValue.sessionEnd;
+  //     console.log('Token:', token);
+  //     console.log('Session Indicator:', sessionIndicator);
+  //     console.log('Session End:', sessionend);
 
-      const currentTime = new Date().getTime();
-    const remainingTime = sessionend - currentTime;
+  //     const currentTime = new Date().getTime();
+  //   const remainingTime = sessionend - currentTime;
 
-    setTimeout(() => {
-      this.logservice.logout();
-      this.router.navigate(['login']);
-    }, remainingTime);
-    });
-  }
+  //   setTimeout(() => {
+  //     this.logservice.logout();
+  //     this.router.navigate(['login']);
+  //   }, remainingTime);
+  //   });
+  // }
   
   
   product=[
@@ -83,7 +88,7 @@ export class ProductComponent implements DoCheck, OnInit  {
 
 
 
-    this.router.navigate(['login','products', 'buy', id],{ queryParams:{userToken: JSON.stringify( this.cookieValue)}});
+    this.router.navigate(['login','products', 'buy', id]);
   }
    
   

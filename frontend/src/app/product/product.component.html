@@ -1,11 +1,10 @@
 <app-header></app-header>
 <div >
-  <button id="btn" type="button" class="btn  me-auto" routerLink="/home">Back</button>
-  <div>
+  <div class="mt-5">
     <app-filter (Buttonchanged)="radiochanged($event)"  [avail]="getavail()" [call]="getallitems()" [notavail]="getnot()"></app-filter>
 
   </div>
-   
+
   
   <div id="cardc" class="d-flex justify-content-center flex-wrap ms-1 p-1 " >
     <div *ngFor="let item of product; let i = index"  id="st">

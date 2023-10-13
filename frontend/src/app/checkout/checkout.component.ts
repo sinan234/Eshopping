@@ -19,11 +19,11 @@ export class CheckoutComponent implements OnInit {
 
     ngOnInit(): void {
       this.route.queryParams.subscribe((params) => {
-        const userToken = params['userToken'];  
-        this.cookieValue = JSON.parse(userToken);
+        // const userToken = params['userToken'];  
+        // this.cookieValue = JSON.parse(userToken);
        
         this.amount = params['amount'];
-        this.orders = params['products'];
+        this.orders = JSON.parse(params['products']);
         console.log("amount",this.amount);
         console.log("products",this.orders);
         const Razorpayoptions={

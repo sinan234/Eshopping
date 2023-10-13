@@ -18,11 +18,12 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
   length:any;
   display:boolean=false;
   products:any;
-  filteredObjects:any;
+  filteredObjects:any=[];
   orderedproducts:any;
   empty:boolean=false;
   totalamount:number=0;
   aftership:any;
+  newObject: any[] = [];
   constructor(private service:Productservice, private router:Router , private route:ActivatedRoute, private http:HttpClient) { }
   
   ngOnChanges(): void {
@@ -33,11 +34,17 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
     const id = this.route.snapshot.paramMap.get('id'); 
     confirm("Are you sure you want to checkout?");
     console.log("checkout button clicked")
+    if(window.location.pathname=="/login/cart"){
+       this.router.navigate(['login', 'cart' , 'checkout'],{
+      queryParams: {
+        amount: amount,
+        products: JSON.stringify(this.newObject)
+       }});
+    }
     this.router.navigate(['login','products', 'buy',id, 'checkout'], {
       queryParams: {
         amount: amount,
-        products: JSON.stringify(this.orderedproducts),
-        userToken: JSON.stringify(this.cookieValue)
+        products: JSON.stringify(this.newObject)
       }
     });
         
@@ -76,15 +83,57 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
     this.http.get('http://localhost:3000/getCart').subscribe((res: any) => {
 
     console.log("products get from server");
-    console.log(res);
     this.products = Object.values(res);
     this.length=this.products.length;
-    console.log(this.length);
-    this.filteredObjects = this.service.product.filter((product: any) => {
-      return this.products.some((newproduct:any) => {
-        return product.Product_ID === parseInt(newproduct.product_id);
-      });
-    });
+    console.log("products from server" , this.products)
+
+    
+    // this.filteredObjects = this.service.product.filter((product: any) => {
+    //   return this.products.every((newproduct:any) => {
+    //     return product.Product_ID === parseInt(newproduct.product_id);
+    //   });
+    // });
+  this.products.forEach((product: any) => {
+  const matchingProducts = this.service.product.filter((newproduct: any) => {
+    return newproduct.Product_ID === parseInt(product.product_id);
+  });
+  this.filteredObjects.push(...matchingProducts);
+});
+console.log("filtered  products",this.filteredObjects);
+
+interface Product {
+  Product_ID: number;
+  itemcount: number;
+}
+
+const tempObject: { [key: number]: boolean } = {};
+const uniqueProducts: Product[] = [];
+
+this.filteredObjects.forEach((item: Product) => {
+  const productId = item.Product_ID;
+  if (tempObject[productId]) {
+    const existingProduct = uniqueProducts.find((p) => p.Product_ID === productId);
+    if (existingProduct) {
+      existingProduct.itemcount += 1; 
+    }
+  } else {
+    tempObject[productId] = true;
+    item.itemcount = 1; 
+    uniqueProducts.push(item); 
+  }
+});
+
+this.filteredObjects = uniqueProducts; 
+
+ this.newObject = this.filteredObjects.map((item: Product) => {
+  return {
+    productId: item.Product_ID,
+    count: item.itemcount
+  };
+});
+console.log("new object", this.newObject); 
+
+
 
     this.orderedproducts=this.filteredObjects.map((obj:any)=> obj.Product_ID)
     console.log("ordered products", this.orderedproducts);
@@ -93,7 +142,6 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
         this.empty=true;
     }
     this.calculateTotal();
-    console.log("filtered  products",this.filteredObjects);
 
     
   }, (error: any) => {
@@ -120,17 +168,17 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
 
    ngOnInit(){
 
-    this.route.queryParams.subscribe((params) => {
-      const userToken = params['userToken'];  
-      console.log('User Token:', userToken);
-      this.cookieValue = JSON.parse(userToken);
-      console.log(this.cookieValue);
-    });
+    // this.route.queryParams.subscribe((params) => {
+    //   const userToken = params['userToken'];  
+    //   console.log('User Token:', userToken);
+    //   this.cookieValue = JSON.parse(userToken);
+    //   console.log(this.cookieValue);
+    // });
     // this.productid=this.activatedroute.snapshot.paramMap.get('id');
     // this.product=this.service.product.find(x=> x.Product_ID==this.productid)
     // this.products=this.service.product;
     // console.log(this.product)
-
+   
 
     this.getCartProducts();
   }

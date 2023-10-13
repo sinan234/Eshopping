@@ -32,6 +32,9 @@ import { DetailsComponent } from './details/details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './success/success.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { SliderComponent } from './slider/slider.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 
 
 @NgModule({
@@ -62,6 +65,8 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
          DetailsComponent,
          CheckoutComponent,
          SuccessComponent,
+         SliderComponent,
+         
          
          
    
@@ -72,7 +77,9 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    CarouselModule.forRoot(),
+
 
   ],
   providers: [{

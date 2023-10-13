@@ -1,86 +1,102 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, DoCheck } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { LoggedinService } from '../service/loggedin.service';
-
+import { ToastrService } from 'ngx-toastr';
+import axios from 'axios';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent  {
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private service: LoggedinService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private cookie: CookieService
+  ) {}
 
-  constructor(private http:HttpClient,private service:LoggedinService, private router:Router, private route:ActivatedRoute, private cookie:CookieService){}
-  email:string='';
-  password:string='';
-  loader:boolean=false;
-  msg:string='User already exists';
-  logindisplay:boolean=false;
-  
- clicked(){
-  this.logindisplay=false;
- }
+  email: string = '';
+  password: string = '';
+  loader: boolean = false;
+  username:string=''
+  msg: string = 'User already exists';
+  logindisplay: boolean = false;
 
-sub(){
-  setTimeout(() => {  
-    this.logindisplay=false;
-  },2000);
-}
-
- onsubmit(form: NgForm) {
-  this.sub();
-  if (this.email.length === 0 || this.password.length === 0) {
-    this.msg = 'All fields are required';
-    this.logindisplay = true;
-    return;
+  clicked() {
+    this.logindisplay = false;
   }
 
-  console.log("onsubmit method called");
-  console.log(form.value);
-
-  const user = { email: this.email, password: this.password };
-  if(this.email.length==0 || this.password.length==0 ){
-    this.msg='All fields are required';
-    this.logindisplay=true;
-    return;
+  sub() {
+    setTimeout(() => {
+      this.logindisplay = false;
+    }, 2000);
   }
-  this.loader=true;
-  this.logindisplay = true;
 
+  sessiontime(cookie: any) {
+    const sessionend= cookie.sessionEnd;
+    const currentTime = new Date().getTime();
+    const remainingTime = sessionend - currentTime;
+    setTimeout(() => {
+      this.service.logout();
+      this.router.navigate(['login']);
+    },remainingTime);
+  }
+  onsubmit(form: NgForm) {
+    this.sub();
+    if (this.email.length === 0 || this.password.length === 0) {
+      this.msg = 'All fields are required';
+      this.logindisplay = true;
+      return;
+    }
 
-    this.http.post('http://localhost:3000/login', user)
-      .subscribe(
-        (response: any) => {
-          console.log(response);
-          this.msg = response.message;
-          localStorage.setItem('token', response.cookie.token);
-          
-          if(response){
-            
-            // setTimeout(() => {
-            //   this.router.navigate(['sample'], { relativeTo: this.route, queryParams: { userToken: response.userToken } });
-            // },3000);
+    console.log('onsubmit method called');
+    console.log(form.value);
 
-            console.log('Received cookie:', response.cookie);
+    const user = { email: this.email, password: this.password };
+    if (this.email.length == 0 || this.password.length == 0) {
+      this.msg = 'All fields are required';
+      this.logindisplay = true;
+      return;
+    }
 
+    this.http.post('http://localhost:3000/login', user).subscribe(
+      (response: any) => {
+        console.log(response);
+      if(response.message=='Authentication successful'){
+        this.toastr.success('Login successful');
+        this.username=response.name
 
-            setTimeout(() => {
-              this.router.navigate(['products'], {
-                relativeTo: this.route,
-                queryParams: { userToken: JSON.stringify(response.cookie)  }
-              });
-            }, 3000);
+        console.log("USER NAME",this.username);
 
-            
-          }
-          form.reset();
-          console.log(this.msg);
-        },
+      }
+       else{ 
+        this.logindisplay = true;
+        this.msg = response.message;
+       }
+        localStorage.setItem('token', response.cookie.token);
+        
+        if (response) {
+          console.log('Received cookie:', response.cookie);
+          this.sessiontime(response.cookie);
+          setTimeout(() => {
+            this.router.navigate(['products'], {
+              relativeTo: this.route,
+              // queryParams: { userToken: JSON.stringify(response.cookie) },
+            });
+          }, 3000);
+        }
+        form.reset();
+        console.log(this.msg);
+      },
       (error: any) => {
-        console.log("login failed");
+        console.log('login failed');
         console.log(error);
         if (error.error && error.error.message) {
           this.msg = error.error.message;
@@ -88,8 +104,6 @@ sub(){
           this.msg = 'Unknown error occurred';
         }
       }
-    );      
-
-}
-
+    );
+  }
 }

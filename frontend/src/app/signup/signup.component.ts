@@ -2,6 +2,8 @@ import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
 import { NgForm } from '@angular/forms';
 import { set } from 'mongoose';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +21,7 @@ export class SignupComponent  {
    ischecked:boolean=false;
    @ViewChild('check') check:any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastr:ToastrService, private router:Router) {}
 
   ngOnInit(): void {
     setTimeout(() => {  
@@ -72,7 +74,9 @@ export class SignupComponent  {
           
           console.log('User created successfully');
           console.log('Response:', response);
-          localStorage.setItem('token', response.token);
+          // localStorage.setItem('token', response.token);
+          this.toastr.success('User created successfully');
+          this.router.navigate(['/login']);
         },
         (error: any) => {
           console.log('Error creating user');

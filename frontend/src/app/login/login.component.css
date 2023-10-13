@@ -11,7 +11,12 @@
     color:white;
     background-color: darkcyan;
   }
-
+#btnn:hover{
+    background-color: red;
+}
+#btnn{
+  border-radius: 4px;
+}
   a:hover{
     background-color: gray;
   }
@@ -42,7 +47,7 @@
   }
   .modal-title {
     font-size: 16px;
-    font-weight: bold;
+    
   }
   .modal-body {
     padding: 15px;
@@ -51,7 +56,4 @@
     padding: 10px 15px;
     border-top: 1px solid #a3b3a5;
   }
-  .btn-secondary {
-    background-color: #ccc;
-    border-color: #6d6d6d;
-  }
+ 
