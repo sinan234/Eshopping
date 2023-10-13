@@ -12,9 +12,10 @@ const Productwish = require('./models/wishlist');
 const bodyParser = require('body-parser');
 const api= require('./routes/api'); 
 const sessionStore = {};
+const Payment = require('./models/payment');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const sessionTimeout = 20 * 2000 * 1000;
+const sessionTimeout = 3 * 6000 *10;
 db.connect()
   
 // app.use('/', api);
@@ -25,10 +26,6 @@ app.use(cookieParser());
 // API Key - rzp_test_lwlav4cxjCCLRq
 // API Secret - 8O5tQ9B7jsoUNuilQJKYLzMc
 
-// const razorpay = new Razorpay({
-//   key_id: 'rzp_test_lwlav4cxjCCLRq',
-//   key_secret: '8O5tQ9B7jsoUNuilQJKYLzMc'
-// });
 
 app.use(bodyParser.json());
 
@@ -69,9 +66,21 @@ app.post('/payment', async (req, res) => {
     const decodedToken=jwt.verify(token, 'secretKey');
     const user_id = decodedToken.userId;
     console.log('User id:', user_id);
-    const { paymentid, products, amount } = req.body;
-    console.log('Payment id:', paymentid);
+    const { paymentId, products, amount } = req.body;
+    console.log('Payment id:', paymentId);
     console.log('Amount:', amount);
+    console.log('Products:', products);
+    const Paymentdetails=new Payment({user_id, paymentId, products, amount});
+    await Paymentdetails.save();
+
+    const user= await Cart.find({user_id});
+    if(!user){
+      console.log('No users found');
+      return res.status(400).json({message: "No users found"});
+    }
+
+    await Cart.deleteMany({ user_id });
+
    
     res.status(200).json({ message: 'Payment successful' });
   } catch (error) {
@@ -104,7 +113,7 @@ app.post('/create_wishlist', async (req, res) => {
    }
 });
 
-app.get('/get_wishlist',async (req, res) => {
+app.get('/get_wishlist', async (req, res) => {
   try{
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken=jwt.verify(token, 'secretKey');
@@ -189,7 +198,7 @@ app.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-
+    
     if (!user) {
       console.log('User not found');
       return res.status(400).json({ message: "User not found" });
@@ -204,12 +213,11 @@ app.post('/login', async (req, res) => {
     const session = {
       userId: user._id,
       expiry: Date.now() + sessionTimeout
-      // Add any other properties to the session object as needed
     };
 
     const token = jwt.sign(session, 'secretKey');
-    user.token = token; // Store the token in the user document
-await user.save();
+    user.token = token; 
+    await user.save();
     const cookieValue = {
       token,
       sessionIndicator: true,
@@ -221,7 +229,7 @@ await user.save();
       secure: true,
       httpOnly: true
     });
-    res.status(201).json({ message: "Authentication successful" , cookie: cookieValue});
+    res.status(201).json({ message: "Authentication successful" , name: user.name,cookie: cookieValue});
 
   } catch (error) {
     console.log('Error logging in:', error);
