@@ -21,9 +21,11 @@ export class ProductComponent implements DoCheck , OnInit {
 
   ngOnInit(): void {
     this.headerid.IsProductPage();
+  
   }
   ngDoCheck() {
     this.newsearcha = this.searchService.getSearchValue();
+    
     this.sr=this.newsearcha
     console.log(this.sr)
   }

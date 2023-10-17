@@ -34,6 +34,7 @@ import { SuccessComponent } from './success/success.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { SliderComponent } from './slider/slider.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { OrdersComponent } from './orders/orders.component';
 
 
 
@@ -66,6 +67,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
          CheckoutComponent,
          SuccessComponent,
          SliderComponent,
+         OrdersComponent,
          
          
          

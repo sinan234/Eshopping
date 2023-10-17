@@ -17,6 +17,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { DetailsComponent } from './details/details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './success/success.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const appRoute:Routes=[
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,7 +36,7 @@ const appRoute:Routes=[
   // ,
   {path:'login/products', component: ProductComponent, canActivate:[AuthGuard]},
   {path:'login/products/buy/:id', component: ProductdetailsComponent},
-  {path:'home/contact', component: ContactComponent},
+  {path:'contact', component: ContactComponent},
   {path:'signup', component: SignupComponent},
   {path:'login', component: LoginComponent},
   {path:'login/cart' , component:ProductdetailsComponent, canActivate:[AuthGuard]},
@@ -44,6 +45,7 @@ const appRoute:Routes=[
   {path:'loader', component:LoaderComponent},
   {path:'login/cart/checkout', component:CheckoutComponent},
   {path:'login/products/details/:id',component:DetailsComponent},
+  {path:'login/orders' , component: OrdersComponent},
   {path:'login/products/buy/:id/checkout' , component:CheckoutComponent},
   {path:'login/products/buy/checkout/success' , component:SuccessComponent},
   

@@ -11,7 +11,7 @@
     <!-- <div [appHighlight]="item.Price=== mostpricedproduct.Price"> -->
     
     <div *ngIf=" sr==='' || item.Name.toLowerCase().includes(sr)">
-      <div >
+     <div >
       <div id="cardp" class="card " style="width: 20rem; height: 30rem;" *ngIf="itemcountradio==='All' || itemcountradio===item.availbale" >
         <img id="img" [src]="item.Thumbnail" class="card-img-top img-fluid" alt="...">
         <div class="card-body">
@@ -28,6 +28,7 @@
     
   </div>
 </div>
+
 </div>
    <!-- <div class="d-flex justify-content-center   ">
     <app-sample1></app-sample1>

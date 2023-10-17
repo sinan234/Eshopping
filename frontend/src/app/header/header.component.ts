@@ -5,6 +5,7 @@ import { SearchService } from '../service/search.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderidentifierService } from '../service/headeridentifier.service';
+import { UsernameService } from '../service/username.service';
 
 @Component({
   selector: 'app-header',
@@ -13,12 +14,14 @@ import { HeaderidentifierService } from '../service/headeridentifier.service';
 })
 export class HeaderComponent implements OnInit{
   show:any;
-  constructor(private headerid: HeaderidentifierService ,public auth:LoggedinService, private search: SearchService, private router: Router, private toastr:ToastrService){}
+  constructor(private headerid: HeaderidentifierService ,public name: UsernameService,public auth:LoggedinService, private search: SearchService, private router: Router, private toastr:ToastrService){}
    searchValue:string='';
    
    ngOnInit(): void {
        this.show=this.headerid.IsProductPage();
        console.log("show",this.show)
+       const username=this.name.getUserName();
+       console.log("username is",username)
    }
   //  changeSearchValue(eventData:Event){
   //    this.searchValue=(<HTMLInputElement>eventData.target).value;

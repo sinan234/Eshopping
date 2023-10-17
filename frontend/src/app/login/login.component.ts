@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoggedinService } from '../service/loggedin.service';
 import { ToastrService } from 'ngx-toastr';
 import axios from 'axios';
+import { UsernameService } from '../service/username.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent  {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
+    private name:UsernameService,
     private service: LoggedinService,
     private router: Router,
     private route: ActivatedRoute,
@@ -74,6 +76,7 @@ export class LoginComponent  {
         this.username=response.name
 
         console.log("USER NAME",this.username);
+        this.name.setUserName(this.username);
 
       }
        else{ 
