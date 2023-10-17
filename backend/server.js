@@ -94,12 +94,12 @@ app.post('/create_wishlist', async (req, res) => {
     
     const{product_name,product_id,product_price,product_image, product_available} = req.body;
     const token = req.headers.authorization.split(' ')[1];
-    console.log('Token:', token);
+    // console.log('Token:', token);
     const decodedToken=jwt.verify(token, 'secretKey');
     const user_id = decodedToken.userId;
-   
+    console.log('User id:', user_id);
     const product = await Productwish.findOne({product_id});
-    if(product){
+    if(!product){
       console.log('Product already exists');
       return res.status(400).json({message: "Product already exists"});
     }
@@ -229,6 +229,7 @@ app.post('/login', async (req, res) => {
       secure: true,
       httpOnly: true
     });
+    // console.log('User logged in:', user);
     res.status(201).json({ message: "Authentication successful" , name: user.name,cookie: cookieValue});
 
   } catch (error) {
@@ -236,6 +237,55 @@ app.post('/login', async (req, res) => {
     return res.status(500).json({ message: "Error logging in" });
   }
 });
+
+app.get('/getOrderedProducts', async (req, res) => {
+try{
+   let array=[  ];
+   const token=req.headers.authorization.split(' ')[1];
+   const decodedToken=jwt.verify(token, 'secretKey');
+   const user_id = decodedToken.userId;
+   const paymentId= req.query.paymentId;
+  //  console.log("paymentId", paymentId);
+   const order=await Payment.find({paymentId});
+   if(!order){
+    console.log("No order exists");
+    res.status(500).json({message:"No order exists"});
+   }
+   for(let i=0;i<order.length;i++){
+      // console.log("ordered products", order[i].products);
+      array.push(order[i].products);
+   }
+   
+   
+  // const orderedProducts=order[21].products;
+  // console.log("ordered products", orderedProducts);
+   res.status(200).json(array);
+  }
+  
+catch(error){
+  console.log('Error getting ordered products:', error);
+  res.status(500).json({message: "Error getting ordered products"});
+}});
+
+app.get('/getAllOrderedProducts', async (req, res) => {
+try{
+  const token=req.headers.authorization.split(' ')[1];
+  const decodedToken= jwt.verify(token, 'secretKey');
+  const user_id=decodedToken.userId;
+  // console.log('User id:', user_id);
+  const orderedProducts= await Payment.find({user_id});
+  if(!orderedProducts){
+    console.log('No ordered products found');
+    res.status(500).json({message: "No ordered products found"});
+  }
+  // console.log('Ordered products:', orderedProducts);
+  res.status(200).json(orderedProducts);
+} catch(err){
+   console.log('Error getting all ordered products:', err);
+}
+
+});
+
 
 function verifyToken(req, res, next) {
   if (!req.headers.authorization) {
