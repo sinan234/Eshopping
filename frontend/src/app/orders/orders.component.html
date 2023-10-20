@@ -33,19 +33,19 @@
     
                     <div class="d-flex justify-content-between" *ngFor="let b of item.products">
                       <p class="fw-bold mb-0">{{b.Name}}</p>
-                      <p class="text-muted mb-0">{{b.Price}}</p>
+                      <p class="text-muted mb-0">Rs.{{b.Price}}</p>
                     </div>
     
                     <div class="d-flex justify-content-between">
-                      <p class="small mb-0">Shipping</p>
-                      <p class="small mb-0">Rs 50</p>
+                      <p class="small mb-0 fw-bold" >Shipping</p>
+                      <p class="small mb-0 text-muted">Rs 50</p>
                     </div>
     
   
     
                     <div class="d-flex justify-content-between">
                       <p class="fw-bold">Total</p>
-                      <p class="fw-bold" style="color: #35558a;">{{item.amount}}</p>
+                      <p class="fw-bold" style="color: #000000;">{{item.amount}}</p>
                     </div>
     
                   </div>

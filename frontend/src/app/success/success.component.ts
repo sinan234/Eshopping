@@ -16,10 +16,20 @@ export class SuccessComponent implements OnInit {
  month=this.date.getMonth();
  products:any;
  newp:any;
+ data:any;
  filteredproducts:any;
   year=this.date.getFullYear();
 
   constructor(private router:Router,private service:Productservice, private route:ActivatedRoute, private http:HttpClient) { }
+
+  SendRequest(data:any){
+    this.http.put('http://localhost:3000/admin/reducequantity', data)
+  .subscribe((res:any)=>{
+     console.log(res)
+  }, (err:any)=>{
+      console.log("Error occured", err)
+  });
+  }
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
        this.amount = params['amount'];
@@ -30,6 +40,7 @@ export class SuccessComponent implements OnInit {
       this.products=Object.values(res);
       this.newp=Object.values(this.products[0]);
       console.log("newp",this.newp);
+      this.SendRequest(this.newp)
       this.filteredproducts= this.service.product.filter((item)=> {
        return  this.newp.some((element:any) => {
           return item.Product_ID==element.productId;
@@ -42,5 +53,8 @@ export class SuccessComponent implements OnInit {
       console.log(err);
     }
     );
+
+  
+  
   }
 }

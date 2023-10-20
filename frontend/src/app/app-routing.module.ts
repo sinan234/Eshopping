@@ -18,6 +18,12 @@ import { DetailsComponent } from './details/details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './success/success.component';
 import { OrdersComponent } from './orders/orders.component';
+import { AdminloginComponent } from './adminlogin/adminlogin.component';
+import { AdminhomeComponent } from './adminhome/adminhome.component';
+import { AddproductComponent } from './addproduct/addproduct.component';
+import { AdminAuthGuard } from './service/adminauth.guard';
+import { EditproductsComponent } from './editproducts/editproducts.component';
+import { AdminpaymentComponent } from './adminpayment/adminpayment.component';
 
 const appRoute:Routes=[
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -48,7 +54,11 @@ const appRoute:Routes=[
   {path:'login/orders' , component: OrdersComponent},
   {path:'login/products/buy/:id/checkout' , component:CheckoutComponent},
   {path:'login/products/buy/checkout/success' , component:SuccessComponent},
-  
+  {path:'admin/login', component: AdminloginComponent },
+  {path:'admin/login/home' , component: AdminhomeComponent  },
+  {path:'admin/login/home/addproduct' , component: AddproductComponent , canActivate:[AdminAuthGuard]},
+  {path:'admin/login/home/editproducts' , component:EditproductsComponent , canActivate:[AdminAuthGuard]},
+  {path:'admin/login/home/paymentdetails' ,component: AdminpaymentComponent}
 
 ]
 

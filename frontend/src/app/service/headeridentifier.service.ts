@@ -12,5 +12,10 @@ export class HeaderidentifierService {
     }
     return false;
   }
-  
+  IsHomePage(){
+    if (window.location.pathname == '/home') {
+      return true;
+    }
+    return false;
+  }
 }

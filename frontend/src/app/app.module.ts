@@ -35,6 +35,12 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { SliderComponent } from './slider/slider.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrdersComponent } from './orders/orders.component';
+import { AdminloginComponent } from './adminlogin/adminlogin.component';
+import { AdminhomeComponent } from './adminhome/adminhome.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AddproductComponent } from './addproduct/addproduct.component';
+import { EditproductsComponent } from './editproducts/editproducts.component';
+import { AdminpaymentComponent } from './adminpayment/adminpayment.component';
 
 
 
@@ -68,6 +74,11 @@ import { OrdersComponent } from './orders/orders.component';
          SuccessComponent,
          SliderComponent,
          OrdersComponent,
+         AdminloginComponent,
+         AdminhomeComponent,
+         AddproductComponent,
+         EditproductsComponent,
+         AdminpaymentComponent,
          
          
          
@@ -81,6 +92,7 @@ import { OrdersComponent } from './orders/orders.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     CarouselModule.forRoot(),
+    FontAwesomeModule,
 
 
   ],

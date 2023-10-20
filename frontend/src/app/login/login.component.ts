@@ -21,7 +21,7 @@ export class LoginComponent  {
     private service: LoggedinService,
     private router: Router,
     private route: ActivatedRoute,
-    private cookie: CookieService
+    private cookie: CookieService,
   ) {}
 
   email: string = '';
@@ -47,6 +47,7 @@ export class LoginComponent  {
     const remainingTime = sessionend - currentTime;
     setTimeout(() => {
       this.service.logout();
+      this.toastr.warning("Session ended, Please login to continue")
       this.router.navigate(['login']);
     },remainingTime);
   }

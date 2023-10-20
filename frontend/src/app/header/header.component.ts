@@ -14,7 +14,7 @@ import { UsernameService } from '../service/username.service';
 })
 export class HeaderComponent implements OnInit{
   show:any;
-  constructor(private headerid: HeaderidentifierService ,public name: UsernameService,public auth:LoggedinService, private search: SearchService, private router: Router, private toastr:ToastrService){}
+  constructor(public headerid: HeaderidentifierService ,public name: UsernameService,public auth:LoggedinService, private search: SearchService, private router: Router, private toastr:ToastrService){}
    searchValue:string='';
    
    ngOnInit(): void {

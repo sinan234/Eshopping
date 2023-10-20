@@ -35,6 +35,8 @@
         <div class="d-flex p-2 ">
           <button  id="btn" *ngIf="!auth.login()" class="btn btn-outline-success  " type="button" routerLink="/signup" routerLinkActive="lactive" >Signup</button>
           <button id="btn" *ngIf="!auth.login()" class="btn btn-outline-success ms-4 me-4 " type="button" routerLink="/login"  routerLinkActive="lactive" (click)="login()">Login</button>
+          <button id="btnab" *ngIf="headerid.IsHomePage()" class="btn btn-outline-secondary  ms-4 me-4 " type="button" routerLink="/admin/login"  routerLinkActive="lactive" >Admin Login</button>
+
         </div>
         <div  class="p-3" *ngIf="auth.login()">
           <span class="text-success">Welcome {{name.getUserName()}}</span>

@@ -36,3 +36,12 @@
         position: relative;
         margin-left: 0px;
     }
+    button{
+        background-color: #f37a27;
+        color: white;
+        border:1px solid white;
+        margin-left: 37%;
+        border-radius: 5px;
+        width: 170px;
+        height: 41px;
+    }

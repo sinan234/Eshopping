@@ -64,3 +64,19 @@ opacity: 0.8;
 transition: 0.3s;
 
   }
+  #btnab{
+    font-family: "Jost", sans-serif;
+font-weight: 500;
+font-size: 16px;
+letter-spacing: 1px;
+background-color: white;
+border-radius: 50px;
+opacity: 0.8;
+transition: 0.3s;
+
+
+  }
+  #btnab:hover{
+    background-color: #754ffe;
+    color: white;
+  }
