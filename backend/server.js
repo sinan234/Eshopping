@@ -71,26 +71,32 @@ app.delete('/admin/removeproduct', async(req,res)=>{
 
 app.put('/admin/reducequantity', async (req, res) => {
   try {
-    console.log("req body", req.body);
     const products = req.body;
-     console.log("products buyed", products)
-     for(let item of products){
-      let Product_Id= item.productId;
-      let Product_Quantity =item.count;
-      console.log(Product_Id, Product_Quantity)
-      const product=await Product.findOne({Product_Id});
-      if(!product){
-        console.log("Produc not existing");
-        res.status(500).json({message:"Product not exists"})
+    console.log("products bought", products);
+    
+    for (let item of products) {
+      let Product_Id = item.productId;
+      let count = item.count;
+      console.log(Product_Id, count);
+      
+      const product = await Product.findOne({ Product_Id });
+      
+      if (!product) {
+        console.log("Product not existing");
+        return res.status(500).json({ message: "Product does not exist" });
       }
-      product.Product_Quantity-=Product_Quantity;
+      
+      product.Product_Quantity -= count;
       await product.save();
-      res.status(200).json({message:"Product quantity updated successfully"})
-     }
-  } catch(err){
-    res.status(500).json({message:"Unknown error occured"});
+    }
+    
+    res.status(200).json({ message: "Product quantities updated successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Unknown error occurred" });
   }
-})
+});
+
 
 app.put('/admin/editproduct', async(req,res)=>{
   try{
@@ -151,14 +157,19 @@ app.post('/admin/createproduct',async (req, res)=>{
   }
 })
 
-app.get('/admin/getproducts', async(req,res)=>{
-  try{
-    const products= await Product.find();
-    res.json(products)
-  }catch(err){
-    res.status(500).json({message:"Unknown Error occured"})
+app.get('/admin/getproducts', verifyToken, async (req, res) => {
+  try {
+    const products = await Product.find();
+    const users= await User.find()
+    const product= await Payment.find()
+    const userslength=users.length;
+    res.json({products:products, length:userslength, product:product} ); 
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Unknown Error occurred" });
   }
-})
+});
+
 
 app.post('/create_user', async(req, res) => {
   try {
@@ -181,12 +192,16 @@ app.post('/payment', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken=jwt.verify(token, 'secretKey');
     const user_id = decodedToken.userId;
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+    const date=today.toUTCString();
+    
     console.log('User id:', user_id);
     const { paymentId, products, amount } = req.body;
     console.log('Payment id:', paymentId);
     console.log('Amount:', amount);
     console.log('Products:', products);
-    const Paymentdetails=new Payment({user_id, paymentId, products, amount});
+    const Paymentdetails=new Payment({user_id, paymentId, products, amount, date});
     await Paymentdetails.save();
 
     const user= await Cart.find({user_id});
@@ -204,29 +219,46 @@ app.post('/payment', async (req, res) => {
   }
 });
 
-
 app.post('/create_wishlist', async (req, res) => {
-   try{
-    
-    const{product_name,product_id,product_price,product_image, product_available} = req.body;
+  try {
+    const {
+      product_name,
+      product_id,
+      product_price,
+      product_image,
+      product_available
+    } = req.body;
+
     const token = req.headers.authorization.split(' ')[1];
-    // console.log('Token:', token);
-    const decodedToken=jwt.verify(token, 'secretKey');
+    const decodedToken = jwt.verify(token, 'secretKey');
     const user_id = decodedToken.userId;
-    console.log('User id:', user_id);
-    const product = await Productwish.findOne({product_id});
-    if(!product){
+
+    const existingProduct = await Productwish.findOne({
+      user_id,
+      product_id
+    });
+
+    if (existingProduct) {
       console.log('Product already exists');
-      return res.status(400).json({message: "Product already exists"});
+      return res.status(400).json({ message: 'Product already exists' });
     }
-    const newProduct = new Productwish({product_name,product_id,product_price,product_image, product_available, user_id});
+
+    const newProduct = new Productwish({
+      product_name,
+      product_id,
+      product_price,
+      product_image,
+      product_available,
+      user_id
+    });
+
     await newProduct.save();
     console.log('Product added:', newProduct);
-    res.status(201).json({message: "Product added successfully"});
-   } catch(error){
+    res.status(201).json({ message: 'Product added successfully' });
+  } catch (error) {
     console.log('Error adding product:', error);
-    res.status(500).json({message: "Error adding product"});
-   }
+    res.status(500).json({ message: 'Error adding product' });
+  }
 });
 
 app.get('/get_wishlist', async (req, res) => {
@@ -419,14 +451,14 @@ function verifyToken(req, res, next) {
       return res.status(401).send('Unauthorized request');
     }
 
-    const session = req.sessionStore[token];
-    if (!session || session.expiry < Date.now()) {
-      delete req.sessionStore[token];
-      return res.status(401).send({ message: 'Session expired'});
-    }  const userToken = req.cookies.userToken;
-    console.log(userToken)
+    // const session = req.sessionStore[token];
+    // if (!session || session.expiry < Date.now()) {
+    //   delete req.sessionStore[token];
+    //   return res.status(401).send({ message: 'Session expired'});
+    // }  const userToken = req.cookies.userToken;
+    // console.log(userToken)
 
-    req.userId = payload.subject;
+    // req.userId = payload.subject;
     next();
   } catch (error) {
     return res.status(401).send('Unauthorized request');
