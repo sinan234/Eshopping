@@ -2,7 +2,7 @@ import { Component ,DoCheck,OnInit} from '@angular/core';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
@@ -46,7 +46,14 @@ getData(){
       .subscribe((res:any)=>{
         console.log("added to cart");
         console.log(res);
-        this.toastr.success("Product added to cart");
+        // this.toastr.success("Product added to cart");
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: res.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
       },(error:any)=>{
         this.display=true;
         console.log("error occurred");  
@@ -58,6 +65,13 @@ getData(){
     const product_id=item;
     this.http.delete('http://localhost:3000/remove_wishlist', { body: { product_id } }).subscribe((res:any)=>{
       console.log(res);
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: res.message,
+        showConfirmButton: false,
+        timer: 1500
+      })
       this.wishlist = this.wishlist.filter((wishlistItem: any) => wishlistItem.product_id !== item);
       console.log(this.wishlist[0]);
       this.getData();

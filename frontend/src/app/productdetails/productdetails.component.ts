@@ -2,6 +2,8 @@ import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
+import { ProductreduceService } from '../service/productreduce.service';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -24,7 +26,7 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
   totalamount:number=0;
   aftership:any;
   newObject: any[] = [];
-  constructor(private service:Productservice, private router:Router , private route:ActivatedRoute, private http:HttpClient) { }
+  constructor(private pro:ProductreduceService, private service:Productservice, private router:Router , private route:ActivatedRoute, private http:HttpClient) { }
   
   ngOnChanges(): void {
     this.calculateTotal();
@@ -32,8 +34,15 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
   
   checkout(amount:any){
     const id = this.route.snapshot.paramMap.get('id'); 
-    confirm("Are you sure you want to checkout?");
+    // confirm("Are you sure you want to checkout?");
     console.log("checkout button clicked")
+    Swal.fire({
+      title: 'Are you sure you want to Checkout?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+    
+    }).then((result) => {
+      if (result.isConfirmed) {
     if(window.location.pathname=="/login/cart"){
        this.router.navigate(['login', 'cart' , 'checkout'],{
       queryParams: {
@@ -47,7 +56,7 @@ export class ProductdetailsComponent implements OnInit, OnChanges {
         products: JSON.stringify(this.newObject)
       }
     });
-        
+  }}); 
   }
  
   decrement(item: any) {
@@ -152,16 +161,34 @@ console.log("new object", this.newObject);
   }
  
   remove(id:number){
+    
+    Swal.fire({
+      title: 'Are you sure you want to Remove product from cart?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+    
+    }).then((result) => {
+      if (result.isConfirmed) {
     console.log("remove button clicked")
     this.http.delete('http://localhost:3000/removeCart/'+id).subscribe((res: any) => {
       console.log('product deleted from cart');
       console.log(res)
+      
       this.getCartProducts();
       this.calculateTotal();
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: res.message,
+        showConfirmButton: false,
+        timer: 1500
+      })
    } ,(error: any) => {
       console.log('error occured');
       console.log(error);
    });
+      }});
+
   }
 
 
@@ -179,8 +206,9 @@ console.log("new object", this.newObject);
     // this.products=this.service.product;
     // console.log(this.product)
    
-
+   
     this.getCartProducts();
+    
   }
 clicked(){
   this.display=false;

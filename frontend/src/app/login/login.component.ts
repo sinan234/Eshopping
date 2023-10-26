@@ -7,6 +7,7 @@ import { LoggedinService } from '../service/loggedin.service';
 import { ToastrService } from 'ngx-toastr';
 import axios from 'axios';
 import { UsernameService } from '../service/username.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ export class LoginComponent  {
   password: string = '';
   loader: boolean = false;
   username:string=''
-  msg: string = 'User already exists';
+  // msg: string = 'User already exists';
   logindisplay: boolean = false;
 
   clicked() {
@@ -53,37 +54,46 @@ export class LoginComponent  {
   }
   onsubmit(form: NgForm) {
     this.sub();
-    if (this.email.length === 0 || this.password.length === 0) {
-      this.msg = 'All fields are required';
-      this.logindisplay = true;
-      return;
-    }
+    // if (this.email.length === 0 || this.password.length === 0) {
+    //   this.toastr.warning("All fields are reqq=uired")
+    //   this.logindisplay = true;
+    //   return;
+    // }
 
     console.log('onsubmit method called');
     console.log(form.value);
 
     const user = { email: this.email, password: this.password };
     if (this.email.length == 0 || this.password.length == 0) {
-      this.msg = 'All fields are required';
-      this.logindisplay = true;
+      // this.msg = 'All fields are required';
+      // this.logindisplay = true;
+      this.toastr.warning("All fields are required")
       return;
     }
 
     this.http.post('http://localhost:3000/login', user).subscribe(
       (response: any) => {
         console.log(response);
-      if(response.message=='Authentication successful'){
-        this.toastr.success('Login successful');
+        
         this.username=response.name
 
         console.log("USER NAME",this.username);
         this.name.setUserName(this.username);
+      if(response.message=='Authentication successful'){
+        // this.toastr.success('Login successful');
+        Swal.fire({
+          title: 'Login Successful',
+          text: 'Welcome back ' + this.name.getUserName(),
+          icon: 'success',
+          timer: 3000, 
+          showConfirmButton: false 
+        });
 
       }
-       else{ 
-        this.logindisplay = true;
-        this.msg = response.message;
-       }
+      //  else{ 
+      //   this.logindisplay = true;
+      //   this.msg = response.message;
+      //  }
         localStorage.setItem('token', response.cookie.token);
         
         if (response) {
@@ -97,15 +107,26 @@ export class LoginComponent  {
           }, 3000);
         }
         form.reset();
-        console.log(this.msg);
+        // console.log(this.msg);
       },
       (error: any) => {
         console.log('login failed');
         console.log(error);
         if (error.error && error.error.message) {
-          this.msg = error.error.message;
+          Swal.fire({
+            title: 'Error occured',
+            text: error.error.message ,
+            icon: 'error',
+            timer: 3000, 
+            showConfirmButton: false 
+          });
         } else {
-          this.msg = 'Unknown error occurred';
+          Swal.fire({
+            title: 'Error occured',
+            icon: 'error',
+            timer: 3000, 
+            showConfirmButton: false 
+          });
         }
       }
     );

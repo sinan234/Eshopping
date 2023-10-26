@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -41,11 +41,25 @@ export class DetailsComponent implements OnInit{
       this.http.post('http://localhost:3000/create_wishlist', wishlist,{headers}).subscribe((res: any) => {
         console.log("product added successfully");
         console.log(res);
-        this.msg = res.message;
+        // this.msg = res.message;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: res.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
       }, (error: any) => {
         console.log("error occurred");
         console.log(error);
-        this.msg = error.error.message;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: error.error.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        // this.msg = error.error.message;
       });
       console.log("added to wishlist");
     }
@@ -56,12 +70,25 @@ export class DetailsComponent implements OnInit{
       .subscribe((res:any)=>{
         console.log("added to cart");
         console.log(res);
-        this.msg=res.message;
-        this.display=true;
+        // this.msg=res.message;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: res.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        // this.display=true;
       },(error:any)=>{
-        this.display=true;
-
-        this.msg=error.error.message;
+        // this.display=true;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: error.error.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        // this.msg=error.error.message;
         console.log("error occurred");  
       })}
   }

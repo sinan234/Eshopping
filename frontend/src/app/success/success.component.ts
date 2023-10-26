@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Productservice } from '../service/products.service';
+import { ProductreduceService } from '../service/productreduce.service';
 
 @Component({
   selector: 'app-success',
@@ -22,8 +23,8 @@ export class SuccessComponent implements OnInit {
 
   constructor(private router:Router,private service:Productservice, private route:ActivatedRoute, private http:HttpClient) { }
 
-  SendRequest(data:any){
-    this.http.put('http://localhost:3000/admin/reducequantity', data)
+  async SendRequest(data:any){
+   await this.http.put('http://localhost:3000/admin/reducequantity', data)
   .subscribe((res:any)=>{
      console.log(res)
   }, (err:any)=>{
@@ -39,15 +40,17 @@ export class SuccessComponent implements OnInit {
     .subscribe((res)=>{
       this.products=Object.values(res);
       this.newp=Object.values(this.products[0]);
-      console.log("newp",this.newp);
       this.SendRequest(this.newp)
+
+      console.log("newp",this.newp);
       this.filteredproducts= this.service.product.filter((item)=> {
        return  this.newp.some((element:any) => {
           return item.Product_ID==element.productId;
         }); 
       })
       console.log(this.filteredproducts);
-        
+      
+
     }, (err)=>{
       console.log("error in getting products");
       console.log(err);

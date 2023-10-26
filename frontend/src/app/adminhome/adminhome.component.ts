@@ -10,14 +10,27 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminhomeComponent implements OnInit {
   products:any[]=[];
-  search:string=''
+  payment:any;
+  search:string='';
+  length:any;
 constructor(private http:HttpClient, private router:Router, private toastr:ToastrService){
 
 }
 getProduct(){
   this.http.get('http://localhost:3000/admin/getproducts')
   .subscribe((res:any)=>{
-    this.products=res
+    this.products=res.products
+    this.length=res.length;
+    // console.log("products" , res.product)
+    let count=0
+    this.payment= res.product.reduce((acc:any,item:any)=>{
+      
+      for(let pro of item.products){
+         count+=pro.count
+      }
+      return count
+    },0)
+    console.log("products sold", this.payment)
     console.log(this.products)
   }, (err:any)=>{
     console.log("error from server", err)

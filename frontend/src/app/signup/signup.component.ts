@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { set } from 'mongoose';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
+import Swal  from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -41,7 +41,7 @@ export class SignupComponent  {
       
       console.log('Form submitted');
   
-      this.msg = 'User created successfully';
+      // this.msg = 'User created successfully';
 
       if(this.name.length==0 || this.email.length==0 || this.password.length==0 ){
         this.msg='All fields are required';
@@ -75,12 +75,26 @@ export class SignupComponent  {
           console.log('User created successfully');
           console.log('Response:', response);
           // localStorage.setItem('token', response.token);
-          this.toastr.success('User created successfully');
+          // this.toastr.success('User created successfully');
+          Swal.fire({
+            title: 'User created Successfully',
+            text: 'Please login to continue ',
+            icon: 'success',
+            timer: 3000, 
+            showConfirmButton: false 
+          });
           this.router.navigate(['/login']);
         },
         (error: any) => {
           console.log('Error creating user');
           console.log('Error:', error);
+          Swal.fire({
+            title: 'Error occured',
+            text: error.error.message ,
+            icon: 'error',
+            timer: 3000, 
+            showConfirmButton: false 
+          });
         }
       );
     form.reset();

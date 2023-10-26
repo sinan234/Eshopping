@@ -81,7 +81,7 @@
            
               
               
-            <button id="am" class="btn btn-primary shadow-0" (click)="addCart()"> Add to cart </button>
+            <button id="am" class="btn btn-primary shadow-0" [disabled]="product.availbale=='Not Available'" (click)="addCart()"> Add to cart </button>
           </div>
         </main>
       </div>
@@ -241,7 +241,7 @@
     </div>
   </section>
 
-  <div *ngIf="display" class="modal show d-block" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel">
+  <!-- <div *ngIf="display" class="modal show d-block" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog " role="document">
       <div class="modal-content">
         <div class="modal-header  text-black">
@@ -256,4 +256,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->

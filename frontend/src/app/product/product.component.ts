@@ -6,6 +6,7 @@ import { Productservice } from '../service/products.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderidentifierService } from '../service/headeridentifier.service';
+import { ProductreduceService } from '../service/productreduce.service';
 
 @Component({
   selector: 'app-product',
@@ -22,7 +23,7 @@ export class ProductComponent implements DoCheck , OnInit {
   getProduct(){
     this.http.get('http://localhost:3000/admin/getproducts')
     .subscribe((res:any)=>{
-      this.products=res
+      this.products=res.products;
       console.log("products from db", this.products)
     }, (err:any)=>{
       console.log("error from server", err)
@@ -31,7 +32,7 @@ export class ProductComponent implements DoCheck , OnInit {
 
   ngOnInit(): void {
     this.headerid.IsProductPage();
-    this.getProduct()
+    this.getProduct();
   
   }
   ngDoCheck() {

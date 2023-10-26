@@ -3,6 +3,10 @@ import { Onenrollservice } from '../service/buy.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { LoggedinService } from '../service/loggedin.service';
+import { Subscription, interval } from 'rxjs';
+import { Observable } from 'rxjs';
+import { filter } from 'rxjs';
+import { FormGroup, FormControl,Validators ,FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-sample1',
@@ -14,43 +18,55 @@ export class Sample1Component implements OnInit  {
   title:string='Javascript';
   userToken: string='';
   user: any;
-  
+  sub:any;
   onEnroll(){
     const enroll=new Onenrollservice();
     enroll.onEnroll(this.title);
   }
-  
+
 
   constructor(
-    private route: ActivatedRoute,
-    private cookieService: CookieService,
-    private logservice:LoggedinService,
-    private router:Router
+   
   ) {}
 
+
+  signupForm:any;
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      const userToken = params['userToken'];  
-      console.log('User Token:', userToken);
-      const cookieValue = JSON.parse(userToken);
-  
-      const token = cookieValue.token;
-      const sessionIndicator = cookieValue.sessionIndicator;
-      const sessionend=cookieValue.sessionEnd;
-      console.log('Token:', token);
-      console.log('Session Indicator:', sessionIndicator);
-      console.log('Session End:', sessionend);
+      this.signupForm=new FormGroup({
+         'fname': new FormControl(null,[Validators.required,Validators.minLength(3)]),
+         'lname': new FormControl(null,[Validators.required,Validators.minLength(3)]),
+      });
 
-      const currentTime = new Date().getTime();
-    const remainingTime = sessionend - currentTime;
+    // const myObservable = Observable.create((observer:any) => {
+    //   let count = 0;
+    
+    //   setInterval(() => {
+    //     observer.next(count);
+    //     count++;
+    //     if(count==4){
+    //       observer.complete();
+    //     }
+    //     if(count>5){
+    //       observer.error(new Error("Count greater than 5"))
+    //     }
+    //   });
+    //   }, 1000);
 
-    setTimeout(() => {
-      this.logservice.logout();
-      this.router.navigate(['login']);
-    }, remainingTime);
-    });
+    // this.sub=myObservable.pipe(filter((data:any)=>
+    // {return data >0;})).subscribe((data:any)=>{
+    //   console.log(data)
+    // },(err:any)=>{
+    //   console.log("error occured" , err)
+    // },()=>{
+    //   console.log("completed")
+    // })
+
+
+
   }
-
+  onsubmit(){
+    console.log(this.signupForm.value);
+  }
 }
 
 

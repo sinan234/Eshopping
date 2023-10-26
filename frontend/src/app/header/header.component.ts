@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderidentifierService } from '../service/headeridentifier.service';
 import { UsernameService } from '../service/username.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -39,11 +40,28 @@ export class HeaderComponent implements OnInit{
     this.auth.login();
     
    }
-   logout(){
-    this.auth.logout();
-    this.router.navigate(['/login']);
-    this.toastr.success('Logged out successfully');
-   }
+   logout() {
+    Swal.fire({
+      title: 'Are you sure you want to Logout?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+    
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Logged out Successfully',
+          text: 'Please login to continue',
+          icon: 'success',
+          timer: 3000,
+          showConfirmButton: false
+        }).then(() => {
+          this.auth.logout();
+          this.router.navigate(['login']);
+        });
+      }
+    });
+  }
+   
 }
 
 

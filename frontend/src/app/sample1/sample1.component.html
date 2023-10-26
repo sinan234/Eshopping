@@ -6,11 +6,11 @@
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <button href="#" (click)="onEnroll()" class="btn btn-primary">Buy Now</button>
     </div>
-    <form action="/signup" method="POST">
+    <form [formGroup]="signupForm" (ngSubmit)="onsubmit()">
       <label for="fname">First name:</label><br>
-      <input type="text" id="fname" name="fname" ><br>
+      <input type="text" id="fname" name="fname" formControlName="fname" ><br>
       <label for="lname">Last name:</label><br>
-      <input type="text" id="lname" name="lname" ><br><br>
+      <input type="text" id="lname" name="lname" formControlName="lname"><br><br>
       <input type="submit" value="Submit">
     
       

@@ -44,21 +44,22 @@ const appRoute:Routes=[
   {path:'login/products/buy/:id', component: ProductdetailsComponent},
   {path:'contact', component: ContactComponent},
   {path:'signup', component: SignupComponent},
-  {path:'login', component: LoginComponent},
+  {path:'login', component: LoginComponent },
   {path:'login/cart' , component:ProductdetailsComponent, canActivate:[AuthGuard]},
   {path:'login/wishlist', component:WishlistComponent ,  canActivate:[AuthGuard] },
   {path: "login/sample" , component: Sample1Component},
   {path:'loader', component:LoaderComponent},
-  {path:'login/cart/checkout', component:CheckoutComponent},
-  {path:'login/products/details/:id',component:DetailsComponent},
-  {path:'login/orders' , component: OrdersComponent},
-  {path:'login/products/buy/:id/checkout' , component:CheckoutComponent},
-  {path:'login/products/buy/checkout/success' , component:SuccessComponent},
+  {path:'test', component:Sample1Component},
+  {path:'login/cart/checkout', component:CheckoutComponent, canActivate:[AuthGuard]},
+  {path:'login/products/details/:id',component:DetailsComponent, canActivate:[AuthGuard]},
+  {path:'login/orders' , component: OrdersComponent,canActivate:[AuthGuard]},
+  {path:'login/products/buy/:id/checkout' , component:CheckoutComponent,canActivate:[AuthGuard]},
+  {path:'login/products/buy/checkout/success' , component:SuccessComponent,canActivate:[AuthGuard]},
   {path:'admin/login', component: AdminloginComponent },
-  {path:'admin/login/home' , component: AdminhomeComponent  },
+  {path:'admin/login/home' , component: AdminhomeComponent  ,canActivate:[AdminAuthGuard]},
   {path:'admin/login/home/addproduct' , component: AddproductComponent , canActivate:[AdminAuthGuard]},
   {path:'admin/login/home/editproducts' , component:EditproductsComponent , canActivate:[AdminAuthGuard]},
-  {path:'admin/login/home/paymentdetails' ,component: AdminpaymentComponent}
+  {path:'admin/login/home/paymentdetails' ,component: AdminpaymentComponent,canActivate:[AdminAuthGuard]}
 
 ]
 
