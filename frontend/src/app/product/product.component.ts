@@ -21,9 +21,9 @@ export class ProductComponent implements DoCheck , OnInit {
   cookieValue:any;
 
   getProduct(){
-    this.http.get('http://localhost:3000/admin/getproducts')
+    this.http.get('http://localhost:3000/getproductsfromadmin')
     .subscribe((res:any)=>{
-      this.products=res.products;
+      this.products=res;
       console.log("products from db", this.products)
     }, (err:any)=>{
       console.log("error from server", err)

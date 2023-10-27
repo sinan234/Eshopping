@@ -22,19 +22,19 @@ onsubmit(form:any){
     password:form.value.password
   }
   
-  this.http.post('http://localhost:3000/adminlogin' ,data)
+  this.http.post('http://localhost:3000/admin/adminlogin' ,data)
   .subscribe((res:any)=>{
      console.log(res);
      if(res){
       this.toastr.success("Login successful")
       this.admin.isloggedin=true;
-      localStorage.setItem('admintoken', res.token);
+      localStorage.setItem('token', res.token);
       setTimeout(()=>{
         this.router.navigate(['home'],{
           relativeTo:this.route
         })
 
-      },3000)
+      },1500)
 
       const currentTime = new Date().getTime();
       const remainingTime = res.time - currentTime;

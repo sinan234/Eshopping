@@ -42,16 +42,17 @@
           <span class="text-success">Welcome {{name.getUserName()}}</span>
 
         </div>
-        <div class="d-flex p-2 ">
-          <!-- <button *ngIf="auth.login()" class="btn btn-outline-success  " type="button" routerLink="/signup" routerLinkActive="lactive" >Signup</button> -->
-          <button id="btn" *ngIf="auth.login()" class="btn btn-outline-success ms-4 me-4 " type="button"   routerLinkActive="lactive" (click)="logout()">Logout</button>
-        </div>
+       
        
       
         <form class="d-flex" role="search" *ngIf="show">
           <input  class="form-control me-2" type="text" name="search" aria-label="Search" [(ngModel)]="searchValue" (input)="onSearchtextchanged()">
           <button id="btn" class="btn btn-outline-success" type="submit" >Search</button>
         </form>
+        <div class="d-flex p-2 ">
+          <!-- <button *ngIf="auth.login()" class="btn btn-outline-success  " type="button" routerLink="/signup" routerLinkActive="lactive" >Signup</button> -->
+          <button id="btn" *ngIf="auth.login()" class="btn btn-outline-danger ms-4 me-4 " type="button"   routerLinkActive="lactive" (click)="logout()">Logout</button>
+        </div>
        
       </div>
     </div>

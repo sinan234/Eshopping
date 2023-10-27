@@ -35,54 +35,38 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { SliderComponent } from './slider/slider.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrdersComponent } from './orders/orders.component';
-import { AdminloginComponent } from './adminlogin/adminlogin.component';
-import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AddproductComponent } from './addproduct/addproduct.component';
-import { EditproductsComponent } from './editproducts/editproducts.component';
-import { AdminpaymentComponent } from './adminpayment/adminpayment.component';
-
-
+import { AdminModule } from './admin.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    
     BodyComponent,
-         ProductComponent,
-         FilterComponent,
-         TestComponent,
-         SampleDirective,
-         ClickeventDirective,
-         CheckoutComponent,
-         HighlightDirective,
-         IfcaseDirective,
-         Sample1Component,
-         Sample2Component,
-         ContactComponent,
-         AboutComponent,
-         ProductdetailsComponent,
-         SignupComponent,
-         LoginComponent,
-         WishlistComponent,
-         ButtonstyleDirective,
-         LoaderComponent,
-         FooterComponent,
-         DetailsComponent,
-         CheckoutComponent,
-         SuccessComponent,
-         SliderComponent,
-         OrdersComponent,
-         AdminloginComponent,
-         AdminhomeComponent,
-         AddproductComponent,
-         EditproductsComponent,
-         AdminpaymentComponent,
-         
-         
-         
-   
+    ProductComponent,
+    FilterComponent,
+    TestComponent,
+    SampleDirective,
+    ClickeventDirective,
+    CheckoutComponent,
+    HighlightDirective,
+    IfcaseDirective,
+    Sample1Component,
+    Sample2Component,
+    ContactComponent,
+    AboutComponent,
+    ProductdetailsComponent,
+    SignupComponent,
+    LoginComponent,
+    WishlistComponent,
+    ButtonstyleDirective,
+    LoaderComponent,
+    FooterComponent,
+    DetailsComponent,
+    CheckoutComponent,
+    SuccessComponent,
+    SliderComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,14 +78,17 @@ import { AdminpaymentComponent } from './adminpayment/adminpayment.component';
     ToastrModule.forRoot(),
     CarouselModule.forRoot(),
     FontAwesomeModule,
-
-
+    AdminModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenvalidationService,
-    multi: true
-  },CookieService, ToastrService],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenvalidationService,
+      multi: true,
+    },
+    CookieService,
+    ToastrService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

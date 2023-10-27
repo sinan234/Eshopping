@@ -18,18 +18,12 @@ import { DetailsComponent } from './details/details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './success/success.component';
 import { OrdersComponent } from './orders/orders.component';
-import { AdminloginComponent } from './adminlogin/adminlogin.component';
-import { AdminhomeComponent } from './adminhome/adminhome.component';
-import { AddproductComponent } from './addproduct/addproduct.component';
-import { AdminAuthGuard } from './service/adminauth.guard';
-import { EditproductsComponent } from './editproducts/editproducts.component';
-import { AdminpaymentComponent } from './adminpayment/adminpayment.component';
 
-const appRoute:Routes=[
+const appRoute: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   // {path:'', component: BodyComponent}
-  {path:'home', component: BodyComponent},
-  {path:'about', component: AboutComponent},
+  { path: 'home', component: BodyComponent },
+  { path: 'about', component: AboutComponent },
   // {
   //   path: 'login/products',
   //   component: ProductComponent,
@@ -40,32 +34,58 @@ const appRoute:Routes=[
   //   ]
   // }
   // ,
-  {path:'login/products', component: ProductComponent, canActivate:[AuthGuard]},
-  {path:'login/products/buy/:id', component: ProductdetailsComponent},
-  {path:'contact', component: ContactComponent},
-  {path:'signup', component: SignupComponent},
-  {path:'login', component: LoginComponent },
-  {path:'login/cart' , component:ProductdetailsComponent, canActivate:[AuthGuard]},
-  {path:'login/wishlist', component:WishlistComponent ,  canActivate:[AuthGuard] },
-  {path: "login/sample" , component: Sample1Component},
-  {path:'loader', component:LoaderComponent},
-  {path:'test', component:Sample1Component},
-  {path:'login/cart/checkout', component:CheckoutComponent, canActivate:[AuthGuard]},
-  {path:'login/products/details/:id',component:DetailsComponent, canActivate:[AuthGuard]},
-  {path:'login/orders' , component: OrdersComponent,canActivate:[AuthGuard]},
-  {path:'login/products/buy/:id/checkout' , component:CheckoutComponent,canActivate:[AuthGuard]},
-  {path:'login/products/buy/checkout/success' , component:SuccessComponent,canActivate:[AuthGuard]},
-  {path:'admin/login', component: AdminloginComponent },
-  {path:'admin/login/home' , component: AdminhomeComponent  ,canActivate:[AdminAuthGuard]},
-  {path:'admin/login/home/addproduct' , component: AddproductComponent , canActivate:[AdminAuthGuard]},
-  {path:'admin/login/home/editproducts' , component:EditproductsComponent , canActivate:[AdminAuthGuard]},
-  {path:'admin/login/home/paymentdetails' ,component: AdminpaymentComponent,canActivate:[AdminAuthGuard]}
-
-]
+  {
+    path: 'login/products',
+    component: ProductComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'login/products/buy/:id', component: ProductdetailsComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'login/cart',
+    component: ProductdetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'login/wishlist',
+    component: WishlistComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'login/sample', component: Sample1Component },
+  { path: 'loader', component: LoaderComponent },
+  { path: 'test', component: Sample1Component },
+  {
+    path: 'login/cart/checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'login/products/details/:id',
+    component: DetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'login/orders',
+    component: OrdersComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'login/products/buy/:id/checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'login/products/buy/checkout/success',
+    component: SuccessComponent,
+    canActivate: [AuthGuard],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoute)],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

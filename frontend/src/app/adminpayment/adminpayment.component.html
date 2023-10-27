@@ -164,11 +164,11 @@
                           </tr>
                         </thead>
                         <tbody class="p-2">
-                          <tr *ngFor="let item of payment" >
+                          <tr *ngFor="let item of payment.reverse()" >
                         <td>{{item.user_id}}</td>
                         <td>{{item.paymentId}}</td>
                         <td>UPI</td>
-                        <td>{{day}}-{{month}}-{{year}}</td>
+                        <td>{{item.date}}</td>
                         <td>{{item.products.length}}</td>
                         <td>25%</td>
                         <td>{{item.amount}}</td>

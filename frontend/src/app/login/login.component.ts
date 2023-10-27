@@ -14,21 +14,21 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent  {
+export class LoginComponent {
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
-    private name:UsernameService,
+    private name: UsernameService,
     private service: LoggedinService,
     private router: Router,
     private route: ActivatedRoute,
-    private cookie: CookieService,
+    private cookie: CookieService
   ) {}
 
   email: string = '';
   password: string = '';
   loader: boolean = false;
-  username:string=''
+  username: string = '';
   // msg: string = 'User already exists';
   logindisplay: boolean = false;
 
@@ -43,71 +43,62 @@ export class LoginComponent  {
   }
 
   sessiontime(cookie: any) {
-    const sessionend= cookie.sessionEnd;
+    const sessionend = cookie.sessionEnd;
     const currentTime = new Date().getTime();
     const remainingTime = sessionend - currentTime;
     setTimeout(() => {
       this.service.logout();
-      this.toastr.warning("Session ended, Please login to continue")
+      this.toastr.warning('Session ended, Please login to continue');
       this.router.navigate(['login']);
-    },remainingTime);
+    }, remainingTime);
   }
   onsubmit(form: NgForm) {
     this.sub();
-    // if (this.email.length === 0 || this.password.length === 0) {
-    //   this.toastr.warning("All fields are reqq=uired")
-    //   this.logindisplay = true;
-    //   return;
-    // }
 
     console.log('onsubmit method called');
     console.log(form.value);
 
     const user = { email: this.email, password: this.password };
     if (this.email.length == 0 || this.password.length == 0) {
-      // this.msg = 'All fields are required';
-      // this.logindisplay = true;
-      this.toastr.warning("All fields are required")
+      this.toastr.warning('All fields are required');
       return;
     }
 
     this.http.post('http://localhost:3000/login', user).subscribe(
       (response: any) => {
         console.log(response);
-        
-        this.username=response.name
 
-        console.log("USER NAME",this.username);
+        this.username = response.name;
+
+        console.log('USER NAME', this.username);
         this.name.setUserName(this.username);
-      if(response.message=='Authentication successful'){
-        // this.toastr.success('Login successful');
-        Swal.fire({
-          title: 'Login Successful',
-          text: 'Welcome back ' + this.name.getUserName(),
-          icon: 'success',
-          timer: 3000, 
-          showConfirmButton: false 
-        });
-
-      }
-      //  else{ 
-      //   this.logindisplay = true;
-      //   this.msg = response.message;
-      //  }
+        if (response.message == 'Authentication successful') {
+          // this.toastr.success('Login successful');
+          Swal.fire({
+            title: 'Login Successful',
+            text: 'Welcome back ' + this.name.getUserName(),
+            icon: 'success',
+            timer: 3000,
+            showConfirmButton: false,
+          });
+        }
+        //  else{
+        //   this.logindisplay = true;
+        //   this.msg = response.message;
+        //  }
         localStorage.setItem('token', response.cookie.token);
-        
+
         if (response) {
           console.log('Received cookie:', response.cookie);
           this.sessiontime(response.cookie);
-          setTimeout(() => {
+          
             this.router.navigate(['products'], {
               relativeTo: this.route,
               // queryParams: { userToken: JSON.stringify(response.cookie) },
             });
-          }, 3000);
+         
         }
         form.reset();
-        // console.log(this.msg);
       },
       (error: any) => {
         console.log('login failed');
@@ -115,17 +106,17 @@ export class LoginComponent  {
         if (error.error && error.error.message) {
           Swal.fire({
             title: 'Error occured',
-            text: error.error.message ,
+            text: error.error.message,
             icon: 'error',
-            timer: 3000, 
-            showConfirmButton: false 
+            timer: 3000,
+            showConfirmButton: false,
           });
         } else {
           Swal.fire({
             title: 'Error occured',
             icon: 'error',
-            timer: 3000, 
-            showConfirmButton: false 
+            timer: 3000,
+            showConfirmButton: false,
           });
         }
       }
