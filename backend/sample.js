@@ -28,6 +28,9 @@
 
 // app.listen(5000, () => console.log("Server running on port 5000"));
 
+// API Key - rzp_test_lwlav4cxjCCLRq
+// API Secret - 8O5tQ9B7jsoUNuilQJKYLzMc
+
 const Promise= require('promise');
 
 function add(a,b){
